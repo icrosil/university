@@ -13,7 +13,7 @@ namespace __lab {
             Thread producerThread = new Thread(producer);
             Thread operaterThread = new Thread(operater);
             Thread cunsomerThread = new Thread(cunsomer);
-            Console.Read();
+            // Console.Read();
         }
         static void producer() {}
         static void operater() {}
