@@ -1,7 +1,7 @@
 {
   "cmd": "mcs",
   "name": "compile 1 lab",
-  "args": ["-o", "./build/{FILE_ACTIVE_NAME_BASE}", "./{FILE_ACTIVE_NAME}"],
+  "args": ["-out:./build/{FILE_ACTIVE_NAME_BASE}", "./{FILE_ACTIVE_NAME}"],
   "cwd": "{FILE_ACTIVE_PATH}",
   "keymap": "cmd-alt-c",
   "atomCommandName": "OS:compile_1",
