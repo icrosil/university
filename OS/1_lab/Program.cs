@@ -31,9 +31,12 @@ namespace __lab {
             line = file.ReadLine();
             while (line != null) {
                 Thread.Sleep(randomInt());
-                if (streams.openProducer()) {
-                    streams.setCurrentProducer(line);
-                    line = file.ReadLine();
+                lock (streams.getCurrentProducer()) {
+                    if (streams.openProducer()) {
+                        // Console.WriteLine("{0} Producer", streams.counterProducer);
+                        streams.setCurrentProducer(line);
+                        line = file.ReadLine();
+                    }
                 }
             }
             file.Close();
@@ -43,8 +46,11 @@ namespace __lab {
             int status = 1;
             while (!streams.producerEnd || !streams.all(status)) {
                 Thread.Sleep(randomInt());
-                if (streams.openOperater(streams.producerEnd)) {
-                    streams.setCurrentOperater();
+                lock (streams.getCurrentOperater()) {
+                    if (streams.openOperater(streams.producerEnd)) {
+                        // Console.WriteLine("{0} Operater", streams.counterOperater);
+                        streams.setCurrentOperater();
+                    }
                 }
             }
             streams.operaterEnd = true;
@@ -53,10 +59,13 @@ namespace __lab {
             int status = 2;
             System.IO.StreamWriter file = writeFile();
             while (!streams.operaterEnd || !streams.all(status)) {
-                Thread.Sleep(randomInt());
-                if (streams.openCunsomer(streams.operaterEnd)) {
-                    string local = streams.setCurrentCunsomer();
-                    file.WriteLine(local);
+                // Thread.Sleep(randomInt());
+                lock (streams.getCurrentCunsomer()) {
+                    if (streams.openCunsomer(streams.operaterEnd)) {
+                        // Console.WriteLine("{0} Cunsomer", streams.counterCunsomer);
+                        string local = streams.setCurrentCunsomer();
+                        file.WriteLine(local);
+                    }
                 }
             }
             file.Close();
@@ -72,7 +81,7 @@ namespace __lab {
             return file;
         }
         private static int randomInt() {
-            return rnd.Next(0, 700);
+            return rnd.Next(0);
         }
     }
     public class MyString {
@@ -108,11 +117,11 @@ namespace __lab {
         }
         public void updateStream(int n) {
             MyString element = this.ElementAt(n);
-            this.Find(element).Value = new MyString("");
+            this.Find(element).Value.elem = "";
         }
 
         // producer.
-        private int counterProducer = 0;
+        public int counterProducer = 0;
         public int nextCounterProducer() {
             int next = counterProducer + 1;
             counterProducer = next > this.Count - 1 ? 0 : next;
@@ -137,7 +146,7 @@ namespace __lab {
         }
 
         // operater.
-        private int counterOperater = 0;
+        public int counterOperater = 0;
         public int nextCounterOperater() {
             int next = counterOperater + 1;
             counterOperater = next > this.Count - 1 ? 0 : next;
@@ -166,7 +175,7 @@ namespace __lab {
         }
 
         // cunsomer.
-        private int counterCunsomer = 0;
+        public int counterCunsomer = 0;
         public int nextCounterCunsomer() {
             int next = counterCunsomer + 1;
             counterCunsomer = next > this.Count - 1 ? 0 : next;
