@@ -1,7 +1,7 @@
 {
   "cmd": "g++",
   "name": "compile 1 lab",
-  "args": ["-pthread", "-std=c++11", "-o", "./build/{FILE_ACTIVE_NAME_BASE}", "./{FILE_ACTIVE_NAME}"],
+  "args": ["-Wall", "-std=c++11", "-o", "./build/{FILE_ACTIVE_NAME_BASE}", "./{FILE_ACTIVE_NAME}"],
   "cwd": "{FILE_ACTIVE_PATH}",
   "keymap": "cmd-alt-c",
   "atomCommandName": "RO:compile_1",
