@@ -1,0 +1,16 @@
+{
+  "cmd": "gcc",
+  "name": "compile lab",
+  "args": [ "-o", "./build/main_oi", "main_oi.cpp", "-lstdc++"],
+  "sh": true,
+  "cwd": "{PROJECT_PATH}",
+  "keymap": "cmd-alt-c",
+  "atomCommandName": "RO:compile_lab",
+  "targets": {
+    "run": {
+      "cmd": "{PROJECT_PATH}/build/main_oi",
+      "name": "run lab",
+      "keymap": "cmd-alt-r"
+    }
+  }
+}
