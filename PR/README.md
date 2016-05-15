@@ -19,5 +19,7 @@ Labs:
    Is there any difference to shrink or grow rects?
 5. --
 6. --
+7. --
+8. --
 
 For program you need POK directories `./files/D2/D201.POK ... ./files/D3/D341.POK`.

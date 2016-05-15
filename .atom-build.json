@@ -1,17 +1,34 @@
 {
-  "cmd": "g++",
+  "cmd": "mcs",
   "name": "compile 1 lab",
-  "args": ["-Wall", "-std=c++11", "-o", "./build/{FILE_ACTIVE_NAME_BASE}", "./{FILE_ACTIVE_NAME}"],
+  "args": ["-out:./build/{FILE_ACTIVE_NAME_BASE}", "./{FILE_ACTIVE_NAME}"],
   "cwd": "{FILE_ACTIVE_PATH}",
-  "keymap": "cmd-alt-c",
-  "atomCommandName": "RO:compile_1",
+  "keymap": "cmd-alt-c-s",
+  "atomCommandName": "OS:compile_1",
   "targets": {
-    "run": {
-      "cmd": "{FILE_ACTIVE_PATH}/build/{FILE_ACTIVE_NAME_BASE}",
+    "run c#": {
+      "cmd": "mono",
       "name": "run 1 lab",
+      "args": ["{FILE_ACTIVE_NAME_BASE}"],
       "sh": true,
+      "keymap": "cmd-alt-r-c-s",
+      "cwd": "{FILE_ACTIVE_PATH}/build/",
+      "atomCommandName": "OS:run_1"
+    },
+    "compile c++": {
+      "cmd": "gcc",
+      "name": "compile c lab",
+      "args": [ "-o", "{FILE_ACTIVE_PATH}/build/{FILE_ACTIVE_NAME_BASE}", "{FILE_ACTIVE_NAME}", "-lstdc++"],
+      "sh": true,
+      "cwd": "{FILE_ACTIVE_PATH}",
+      "keymap": "cmd-alt-c",
+      "atomCommandName": "RO:compile_lab"
+    },
+    "run C++": {
+      "cmd": "./build/{FILE_ACTIVE_NAME_BASE}",
+      "name": "run c++ lab",
       "keymap": "cmd-alt-r",
-      "atomCommandName": "RO:run_1"
+      "cwd": "{FILE_ACTIVE_PATH}"
     }
   }
 }

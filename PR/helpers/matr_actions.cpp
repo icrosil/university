@@ -379,4 +379,17 @@ vector<Point> sortByValue(vector<Point> points) {
   return points;
 }
 
+int sumByIKLlast(vector<vector<vector<double> > > XX,
+                 vector<vector<double> > &yy) {
+  for (size_t i = 0; i < XX.size(); i++) {
+    for (size_t k = 0; k < XX[i].size(); k++) {
+      for(vector<double>::iterator it = XX[i][k].begin(); it != XX[i][k].end(); ++it) {
+        yy[i][k] += *it;
+      }
+      yy[i][k] /= (double) XX[i][k].size();
+    }
+  }
+  return 0;
+}
+
 #endif

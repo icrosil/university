@@ -63,6 +63,8 @@ struct Point {
   double getY() {
     return y;
   }
+  Point operator+(Point&);
+  Point operator-(Point&);
 
   // Methods
   string toString() {
@@ -78,6 +80,13 @@ struct Point {
     setY(newY);
   }
 };
+Point Point::operator+ (Point &p) {
+  return Point (x + p.x, y + p.y);
+}
+
+Point Point::operator- (Point &p) {
+  return Point (x - p.x, y - p.y);
+}
 
 struct Line {
   // fields.
