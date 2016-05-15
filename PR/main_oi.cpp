@@ -8,10 +8,11 @@
 #include "./labs/3_lab.cpp"
 #include "./labs/4_lab.cpp"
 #include "./labs/5_lab.cpp"
+#include "./labs/6_lab.cpp"
 
 using namespace std;
 
 int main() {
-  executeFifth();
+  executeSixth();
   return 0;
 }

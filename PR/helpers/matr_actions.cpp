@@ -392,4 +392,131 @@ int sumByIKLlast(vector<vector<vector<double> > > XX,
   return 0;
 }
 
+double compareDoubleVectorDelta(vector<double> x, vector<double> y){
+  sort(x.begin(), x.end());
+
+  double g = 3.0;
+  int n = x.size();
+  int m = y.size();
+  vector<double> left = vector<double> (n);
+  vector<double> right = vector<double> (n);
+
+  for (int i = 0; i < n; i++) {
+    left[i] = 0.0;
+    right[i] = 0.0;
+    for (int k = 0; k < m; k++) {
+      if (y[k] < x[i]) {
+        ++left[i];
+      } else {
+        ++right[i];
+      }
+    }
+  }
+
+  double nSumm = n * (n - 1) / 2.;
+  double rho, pMinus, pPlus, p;
+  int sum = 0;
+
+  for (int i = 0; i < n; i++) {
+    for (int j = i + 1; j < n; j++) {
+      double h1 = left[j] - right[i];
+      h1 /= m;
+      pMinus = (1. / (m + g * g)) * (h1 * m + g * g / 2. - g * sqrt(h1 * (1 - h1) * m + g * g / 4.));
+      pPlus = (1. / (m + g * g)) * (h1 * m + g * g / 2. + g * sqrt(h1 * (1 - h1) * m + g * g / 4.));
+      p = (j - i) / (n + 1.);
+      if (pMinus < p && p <= pPlus) {
+        sum++;
+      }
+    }
+  }
+  rho = (double) sum / nSumm;
+  return rho;
+}
+
+int search(vector<double>& v, int & size, double el) {
+  vector<double>::const_iterator endIt = v.end();
+
+  int left = 0;
+  int right = size;
+
+  if (v.size() == 0 || v.front() > el || v.back() < el) {
+    return -1;
+  }
+
+  while (right - left > 0) {
+    int mid = left + (right - left) / 2;
+
+    if (el <= v[mid]) {
+      right = mid;
+    } else if (el > v[mid + 1]) {
+      left = mid + 1;
+    } else {
+      return mid;
+    }
+  }
+    return -1;
+}
+
+void buildTree (vector<int> a, int v, int tl, int tr, int *t) {
+  if (tl == tr) {
+    t[v] = a[tl];
+  } else {
+    int tm = (tl + tr) / 2;
+    buildTree (a, v * 2, tl, tm, t);
+    buildTree (a, v * 2 + 1, tm + 1, tr, t);
+    t[v] = t[v * 2] + t[v * 2 + 1];
+  }
+}
+
+int sumOfTree (int v, int tl, int tr, int l, int r, int *t) {
+  if (l > r) {
+    return 0;
+  }
+
+  if (l == tl && r == tr) {
+    return t[v];
+  }
+  int tm = (tl + tr) / 2;
+  return sumOfTree(v * 2, tl, tm, l, min(r, tm), t) + sumOfTree(v * 2 + 1, tm + 1, tr, max(l, tm + 1), r, t);
+}
+
+double compareDoubleVectorDeltaIntervalTree(vector<double> x, vector<double> y, int *t) {
+  sort(x.begin(), x.end());
+
+  double g = 3.0;
+  int n = x.size();
+  int m = y.size();
+
+  vector<int> v = vector<int> (n, 0);
+
+  double nSumm = n * (n - 1) / 2.;
+  double rho, pMinus, pPlus, p;
+  int sum = 0;
+
+  for (int k = 0; k < m; k++) {
+    int i = search(x, n, y[k]);
+    if (i > -1) {
+      v[i]++;
+    }
+  }
+
+  buildTree(v, 1, 0, n - 1, t);
+
+  for (int i = 0; i < n - 1; i++) {
+    for (int j = i + 1; j < n; j++) {
+      double h1 = sumOfTree(1, 0, n - 1, i, j - 1, t) / m;
+
+      pMinus = (1. / (m + g * g)) * (h1 * m + g * g / 2. - g * sqrt(h1 * (1 - h1) * m + g * g / 4.));
+      pPlus = (1. / (m + g * g)) * (h1 * m + g * g / 2. + g * sqrt(h1 * (1 - h1) * m + g * g / 4.));
+      p = (j - i) / (n + 1.);
+      if (pMinus < p && p <= pPlus) {
+        sum++;
+      }
+    }
+  }
+
+  rho = (double) sum / nSumm;
+  return rho;
+}
+
 #endif

@@ -297,4 +297,9 @@ int out4(vector<Point> FRR,
   return 0;
 }
 
+int coutInterval(int from, int to, string text) {
+  cout << text << from - to << "ms" << endl;
+  return 0;
+}
+
 #endif
