@@ -11,3 +11,7 @@ Each folder has readme file with description.
 -   Pattern Recognition - (PR)
     Up to 8 works about pattern recognition in medical problems.
     Languages used - C++.
+
+-   Computer Modeling of Dynamic Systems - (CMDS)
+    1 work about modeling pendulum motion with visualization.
+    Tech used - JS, CSS, HTML.

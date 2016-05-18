@@ -1,0 +1,21 @@
+{
+  "name": "comp_model_dynamic_systems",
+  "version": "0.1.0",
+  "description": "Pendulum motion",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "ws -d ./app"
+  },
+  "keywords": [
+    "mathematic_model",
+    "dynamic_systems",
+    "pendulum"
+  ],
+  "author": "Illia Olenchenko",
+  "license": "ISC",
+  "devDependencies": {
+    "local-web-server": "^1.2.4"
+  },
+  "private": true
+}
