@@ -1,0 +1,27 @@
+{
+  "name": "mno",
+  "version": "0.1.0",
+  "description": "Server with backend cpp calculations, nodejs controller and angular web",
+  "main": "server/index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "nonlinear",
+    "optisation",
+    "armijo",
+    "gradient",
+    "method",
+    "conjugent"
+  ],
+  "author": "Illia Olenchenko",
+  "license": "ISC",
+  "private": true,
+  "dependencies": {
+    "express": "^4.13.4",
+    "lodash": "^4.12.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.9.2"
+  }
+}

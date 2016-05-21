@@ -71,7 +71,7 @@ var loop = function(time) {
   var alpha = T / pendulum.J;
 
   /* Calculate current velocity from last frame's velocity and
-      average of last frame's acceleration with this frame's acceleration. */
+    average of last frame's acceleration with this frame's acceleration. */
   pendulum.omega += 0.5 * (alpha + pendulum.alpha) * deltaT;
 
   /* Update acceleration */
