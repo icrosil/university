@@ -4,7 +4,8 @@
   "description": "Server with backend cpp calculations, nodejs controller and angular web",
   "main": "server/index.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "start": "nodemon server/index.js & webpack --watch"
   },
   "keywords": [
     "nonlinear",
@@ -12,16 +13,37 @@
     "armijo",
     "gradient",
     "method",
-    "conjugent"
+    "conjugate"
   ],
   "author": "Illia Olenchenko",
   "license": "ISC",
   "private": true,
   "dependencies": {
+    "angular": "^1.5.5",
+    "angular-animate": "^1.5.5",
+    "angular-aria": "^1.5.5",
+    "angular-material": "^1.1.0-rc4-master-06e7e99",
+    "body-parser": "^1.15.1",
+    "d3": "^3.5.17",
     "express": "^4.13.4",
-    "lodash": "^4.12.0"
+    "express-favicon": "^1.0.1",
+    "lodash": "^4.12.0",
+    "log": "^1.4.0"
   },
   "devDependencies": {
-    "nodemon": "^1.9.2"
+    "babel-core": "^6.9.0",
+    "babel-loader": "^6.2.4",
+    "css-loader": "^0.23.1",
+    "eslint": "^2.10.2",
+    "eslint-config-airbnb": "^9.0.1",
+    "eslint-plugin-import": "^1.8.0",
+    "eslint-plugin-jsx-a11y": "^1.2.2",
+    "eslint-plugin-react": "^5.1.1",
+    "morgan": "^1.7.0",
+    "node-sass": "^3.7.0",
+    "nodemon": "^1.9.2",
+    "sass-loader": "^3.2.0",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.1"
   }
 }

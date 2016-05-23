@@ -6,7 +6,9 @@
 #include <cmath>
 #include <vector>
 #include <iostream>
-#include "./structs.cpp"
+#include <fstream>
+#include "../utils/structs.cpp"
+#include "../utils/inout.cpp"
 
 using namespace std;
 
@@ -35,6 +37,27 @@ double armijo(
 }
 
 /**
+ * How we should stop our calculations/
+ * @method stopCondition
+ * @param  f                         main task function
+ * @param  approximation             vector of current approximations
+ * @param  accuracy                  How strict we should find solution
+ * @param  rule                      What rule we should use for stop
+ * @return                           bool to stop or not to stop
+ */
+bool stopCondition(
+  double (*f)(Point),
+  const vector<Point> approximation,
+  double accuracy,
+  string rule
+) {
+  if (rule == "functionApproximation") {
+    return fabs(f(approximation.back()) - f(approximation.end()[-2])) >= accuracy;
+  }
+  return false;
+}
+
+/**
  * Main method for computing results.
  * Gradient Descending Method. With Armijo choosing rule.
  *
@@ -45,6 +68,8 @@ double armijo(
  * @param  step           step that we going to proceed first approximation for Armijo
  * @param  delta          how we should decrease steps? 0 < delta < 1
  * @param  eps            Armijo rule config, 0 < eps < 1
+ * @param  accuracy       How strict we should find solution
+ * @param  rule           What rule we should use for stop
  * @return                status of execution
  */
 int gradDescMethod(
@@ -53,7 +78,9 @@ int gradDescMethod(
   Point a,
   double step,
   double delta,
-  double eps
+  double eps,
+  double accuracy,
+  string rule
 ) {
   vector<Point> approximation = vector<Point>(1, a);
   vector<double> steps = vector<double>(1, step);
@@ -63,7 +90,9 @@ int gradDescMethod(
     // Finding next approximation
     a = a - gradf(a) * steps.back();
     approximation.push_back(Point(a));
-  } while(fabs(f(approximation.back()) - f(approximation.end()[-2])) >= 1e-5);
+  } while(stopCondition(f, approximation, accuracy, rule));
+
+  makeJson(approximation);
 
   return 0;
 }
