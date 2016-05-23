@@ -106,15 +106,15 @@ int main() {
   waitpid(-1, &status, 0);
   if (WEXITSTATUS(status)) {
     cout << "First process exit with true." << endl;
-    return 0;
   } else {
-    cout << "First process exit with false." << endl;
+    cout << "First process exit with false." << "Full response - True." << endl;
+    return 0;
   }
   waitpid(-1, &status, 0);
   if (WEXITSTATUS(status)) {
-    cout << "Second process exit with true." << endl;
+    cout << "Second process exit with true." << endl << "Full response - True." << endl;
   } else {
-    cout << "Second process exit with false. All false." << endl;
+    cout << "Second process exit with false." << endl << "Full response - False." << endl;
   }
 
   return 0;
