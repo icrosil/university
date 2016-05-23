@@ -21,3 +21,6 @@ Each folder has readme file with description.
     Gradient descend method with Armijo step choosing.
     Conjugate gradient method.
     Tech used - C++, NodeJS, JS, CSS, HTML.
+
+-   Professional and Corporate Ethics - (PIKE)
+    1 presentation using 'reveal.js' slides.

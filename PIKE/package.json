@@ -1,0 +1,18 @@
+{
+  "name": "pike",
+  "version": "0.1.0",
+  "description": "web presentation on ethic problem",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "reveal"
+  ],
+  "author": "Illia Olenchenko",
+  "license": "ISC",
+  "private": true,
+  "devDependencies": {
+    "local-web-server": "^1.2.4"
+  }
+}
