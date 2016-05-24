@@ -9,7 +9,7 @@
   <link rel="icon" href="/images/favicon.ico?v=2" />
 </head>
 
-<body ng-app="mno" ng-controller="mainController as ctrl">
+<body ng-app="mno">
     <div layout="row" flex>
       <md-toolbar class="mno-toolbar" flex="60" flex-offset="20">
         <h2 class="md-toolbar-tools">
@@ -23,7 +23,7 @@
           <md-tabs md-dynamic-height="true">
             <md-tab label="Gradient descent with Armijo">
               <md-tab-body>
-                <div ng-include="'./templates/descent.html'"></div>
+                <mno-descent></mno-descent>
               </md-tab-body>
             </md-tab>
             <md-tab label="Conjugate gradients"></md-tab>
