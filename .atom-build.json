@@ -18,7 +18,7 @@
     "compile c++": {
       "cmd": "gcc",
       "name": "compile c lab",
-      "args": [ "-o", "{FILE_ACTIVE_PATH}/build/{FILE_ACTIVE_NAME_BASE}", "{FILE_ACTIVE_NAME}", "-lstdc++"],
+      "args": [ "-Wall", "-o", "{FILE_ACTIVE_PATH}/build/{FILE_ACTIVE_NAME_BASE}", "{FILE_ACTIVE_NAME}", "-lstdc++", "-std=c++11"],
       "sh": true,
       "cwd": "{FILE_ACTIVE_PATH}",
       "keymap": "cmd-alt-c",
