@@ -4,7 +4,8 @@
   "description": "Reveal present on theme \"Moral and Ethic problems with AI\"",
   "main": "Gruntfile.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "start": "ws"
   },
   "keywords": [
     "reveal",
@@ -12,5 +13,8 @@
   ],
   "author": "Illia Olenchenko",
   "license": "ISC",
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "local-web-server": "^1.2.4"
+  }
 }
