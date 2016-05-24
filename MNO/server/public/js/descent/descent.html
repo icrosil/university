@@ -1,3 +1,4 @@
+<!-- Main form -->
 <form name="descent">
   <md-subheader class="md-primary">
     Descent
@@ -8,7 +9,7 @@
   <div flex layout="row" layout-align="space-between stretch">
     <md-input-container class="md-block" flex="45">
       <label>Accuracy</label>
-      <input ng-model="ctrl.descent.accuracy" type="number" ng-max="1" ng-min="0" step="0.0001">
+      <input ng-model="descentCtrl.descent.accuracy" type="number" ng-max="1" ng-min="0" step="0.0001">
       <md-icon md-svg-src="/images/ic_info_black_24px.svg" aria-label="android">
         <md-tooltip md-direction="top">
           Set accuracy that we need to get (used in main loop, from 0 to 1)
@@ -17,9 +18,9 @@
     </md-input-container>
     <md-input-container flex="45">
       <label>Exit Rule</label>
-      <md-select ng-model="ctrl.descent.exitRule">
+      <md-select ng-model="descentCtrl.descent.exitRule">
         <md-optgroup label="Exit rules">
-          <md-option ng-value="rule" ng-repeat="rule in ctrl.exitRules">{{rule.name}}</md-option>
+          <md-option ng-value="rule" ng-repeat="rule in descent.exitRules">{{rule.name}}</md-option>
         </md-optgroup>
       </md-select>
       <md-icon md-svg-src="/images/ic_info_black_24px.svg" aria-label="android">
@@ -32,11 +33,11 @@
   <div flex layout="row" layout-align="space-between center">
     <md-input-container class="md-block" flex="45">
       <label>First Point X</label>
-      <input ng-model="ctrl.descent.point.x" type="number" step="1">
+      <input ng-model="descentCtrl.descent.point.x" type="number" step="1">
     </md-input-container>
     <md-input-container class="md-block" flex="45">
       <label>First Point Y</label>
-      <input ng-model="ctrl.descent.point.y" type="number" step="1">
+      <input ng-model="descentCtrl.descent.point.y" type="number" step="1">
     </md-input-container>
     <md-tooltip md-direction="top">
       Set point that we want to start from
@@ -45,7 +46,7 @@
   <div flex layout="row" layout-align="space-between center">
     <md-input-container class="md-block" flex="50" flex-offset="25">
       <label>First step</label>
-      <input ng-model="ctrl.descent.step" type="number" ng-min="0" step="0.5">
+      <input ng-model="descentCtrl.descent.step" type="number" ng-min="0" step="0.5">
       <md-icon md-svg-src="/images/ic_info_black_24px.svg" aria-label="android">
         <md-tooltip md-direction="top">
           Set first step for method (could be changed with armijo rule) - positive
@@ -62,7 +63,7 @@
   <div flex layout="row" layout-align="space-between center">
     <md-input-container class="md-block" flex="45">
       <label>Epsilon</label>
-      <input ng-model="ctrl.descent.epsilon" type="number" ng-max="1" ng-min="0" step="0.1">
+      <input ng-model="descentCtrl.descent.epsilon" type="number" ng-max="1" ng-min="0" step="0.1">
       <md-icon md-svg-src="/images/ic_info_black_24px.svg" aria-label="android">
         <md-tooltip md-direction="top">
           Set level of pushing next iteration (to decrease step or not, from 0 to 1)
@@ -71,7 +72,7 @@
     </md-input-container>
     <md-input-container class="md-block" flex="45">
       <label>Delta</label>
-      <input ng-model="ctrl.descent.delta" type="number" ng-max="1" ng-min="0" step="0.1">
+      <input ng-model="descentCtrl.descent.delta" type="number" ng-max="1" ng-min="0" step="0.1">
       <md-icon md-svg-src="/images/ic_info_black_24px.svg" aria-label="android">
         <md-tooltip md-direction="top">
           Set multiplyer for step size decreasing (from 0 to 1)
@@ -80,8 +81,12 @@
     </md-input-container>
   </div>
   <div layout="row" layout-align="end center">
-    <md-button class="md-raised md-primary" ng-disabled="descent.$invalid" ng-click="ctrl.sendDescent()">
+    <md-button class="md-raised md-primary" ng-disabled="descentCtrl.$invalid" ng-click="descentCtrl.sendDescent(descentCtrl.descent)">
       Send
     </md-button>
   </div>
 </form>
+
+<!-- Plot -->
+
+<mno-plot></mno-plot>
