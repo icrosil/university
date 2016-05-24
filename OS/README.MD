@@ -3,7 +3,7 @@ Operating systems works.
 
 To compile project use next command:
 
-`gcc -o exec_name main_oi.cpp -lstdc++`
+`gcc -Wall -std=c++11 -libstc++ -o ./build/Program ./Program.cpp`
 
 To run execute compiled file.
 
