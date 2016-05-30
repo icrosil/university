@@ -4,21 +4,33 @@
  */
 /* eslint no-underscore-dangle: 0 */
 /* eslint no-use-before-define: 0 */
+/* eslint no-undef: 0 */
+/* eslint new-cap: 0 */
+/* eslint no-param-reassign: 0 */
 
 const angular = require('angular');
 const _ = require('lodash');
 const Plotly = require('plotly.js');
+require('mathjax');
+
+MathJax.Hub.Config({
+  skipStartupTypeset: true,
+  messageStyle: 'none',
+  'HTML-CSS': {
+    showMathMenu: false,
+  },
+});
+MathJax.Hub.Configured();
 
 function plotLink($scope) {
+  const vm = this;
+
   $scope.$on('mno.approximations', (e, d) => {
-    _.extend(circles, d);
-    circles.z = _.map(_.zip(d.x, d.y), _.spread(f));
+    _.extend(vm.circles, d);
+    vm.circles.z = _.map(_.zip(d.x, d.y), _.spread($scope.$root.f));
     init();
   });
-  function f(x, y) {
-    return Math.sqrt(x * x + y * y + 1) + x / 2 - y / 2;
-  }
-  const circles = {
+  vm.circles = {
     x: [],
     y: [],
     z: [],
@@ -44,7 +56,7 @@ function plotLink($scope) {
     y.push(i);
     z.push([]);
     for (let j = -100; j < 100; j++) {
-      z[z.length - 1].push(f(j, i));
+      z[z.length - 1].push($scope.$root.f(j, i));
     }
   }
 
@@ -58,7 +70,7 @@ function plotLink($scope) {
   init();
 
   function init() {
-    Plotly.newPlot('plot', [surface, circles]);
+    Plotly.newPlot('plot', [surface, vm.circles]);
   }
 }
 
@@ -69,10 +81,29 @@ function plotDirective() {
   return {
     restrict: 'E',
     templateUrl: '/js/plot/plot.html',
-    link: plotLink,
-    controllerAs: 'plot',
+    controller: plotLink,
+    scope: {},
+    controllerAs: 'plotCtrl',
+  };
+}
+
+function mathjaxBindDirective() {
+  return {
+    restrict: 'A',
+    controller: ['$scope', '$element', '$attrs',
+        function mjbdController($scope, $element, $attrs) {
+          $scope.$watch($attrs.mathjaxBind, (value) => {
+            const $script = angular.element('<script type="math/tex">')
+              .html(value === undefined ? '' : value);
+            $element.html('');
+            $element.append($script);
+            MathJax.Hub.Queue(['Reprocess', MathJax.Hub, $element[0]]);
+          });
+        },
+      ],
   };
 }
 
 angular.module('mno')
-  .directive('mnoPlot', plotDirective);
+  .directive('mnoPlot', plotDirective)
+  .directive('mathjaxBind', mathjaxBindDirective);

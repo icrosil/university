@@ -1,2 +1,11 @@
 <md-divider></md-divider>
+<md-subheader>
+  <span mathjax-bind="$root.function"></span>
+</md-subheader>
 <div flex layout="row" layout-align="space-between stretch" id="plot"></div>
+<md-content>
+  Last Approximation:
+  x <span ng-bind="plotCtrl.circles.x[plotCtrl.circles.x.length - 1] | number : 2"></span>,
+  y <span ng-bind="plotCtrl.circles.y[plotCtrl.circles.y.length - 1] | number : 2"></span>,
+  z <span ng-bind="plotCtrl.circles.z[plotCtrl.circles.z.length - 1] | number : 2"></span>
+</md-content>
