@@ -28,7 +28,12 @@ function descentController($scope, common) {
     accuracy: 1e-5,
     exitRule: vm.exitRules[0],
   };
-  vm.sendDescent = common.sendDescent;
+  vm.sendDescent = (options) => {
+    common.sendDescent(options)
+      .then((response) => {
+        $scope.$broadcast('mno.approximations', response.data.response);
+      });
+  };
 }
 
 descentController.$inject = ['$scope', 'common'];

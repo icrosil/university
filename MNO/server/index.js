@@ -37,15 +37,11 @@ app.post('/descent', (req, res) => {
     '-d', req.body.delta,
     '-e', req.body.epsilon,
     '-a', req.body.accuracy,
-    '-er', req.body.exitRule,
+    '-er', req.body.exitRule.value,
   ]);
 
   ls.stdout.on('data', (data) => {
-    log.info(`stdout: ${data}`);
-  });
-
-  ls.on('close', () => {
-    res.sendFile(`${__dirname}/public/build/descent.json`);
+    res.send(JSON.parse(data));
   });
 });
 

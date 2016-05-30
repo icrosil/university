@@ -12,14 +12,14 @@
 
 using namespace std;
 
-// function as 10x^2 + y^2
+// function as sqrt(x^2 + y^2 + 1) + x/2 - y/2
 double f(Point a) {
-  return 10 * a.x * a.x + a.y * a.y;
+  return sqrt(a.x * a.x + a.y * a.y + 1) + a.x / 2. - a.y /2.;
 }
 
 // grad(f)
 Point gradf(Point a) {
-  return Point(20 * a.x, 2 * a.y);
+  return Point(a.x / sqrt(a.x * a.x + a.y * a.y + 1) + 0.5, a.y / sqrt(a.x * a.x + a.y * a.y + 1) - 0.5);
 }
 
 int main(int argc, char* argv[]) {
@@ -48,7 +48,7 @@ int main(int argc, char* argv[]) {
       } else if (str == "-a") {
         accuracy = atof(argv[i + 1]);
       } else if (str == "-er") {
-        rule = atof(argv[i + 1]);
+        rule = argv[i + 1];
       }
     }
   }
