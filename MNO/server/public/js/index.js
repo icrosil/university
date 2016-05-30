@@ -10,6 +10,7 @@ require('../scss/index.scss');
 
 // Angular
 const angular = require('angular');
+require('angular-cache');
 const _ = require('lodash');
 require('angular-material');
 require('angular-material/angular-material.css');
@@ -21,9 +22,18 @@ function runConfig($rootScope) {
 }
 runConfig.$inject = ['$rootScope'];
 
+function config(CacheFactoryProvider) {
+  angular.extend(CacheFactoryProvider.defaults, {
+    maxAge: 15 * 60 * 1000,
+    storageMode: 'localStorage',
+  });
+}
+config.$inject = ['CacheFactoryProvider'];
+
 angular
-  .module('mno', ['ngMaterial'])
-  .run(runConfig);
+  .module('mno', ['ngMaterial', 'angular-cache'])
+  .run(runConfig)
+  .config(config);
 
 // Application
 require('./service/common.js');

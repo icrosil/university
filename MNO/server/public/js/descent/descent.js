@@ -2,22 +2,34 @@
  * author - Illia Olenchenko
  * group  - PM-1 (OM)
  */
+/* eslint new-cap: 0 */
 
 const angular = require('angular');
+const _ = require('lodash');
 
 // Controllers
-function descentController($scope, common) {
+function descentController($scope, common, CacheFactory) {
   const vm = this;
+
+  let descentCache;
+
+  if (!CacheFactory.get('descent')) {
+    descentCache = CacheFactory('descent');
+  }
 
   vm.exitRules = [
     {
       name: 'Function approximation',
       value: 'functionApproximation',
     },
+    {
+      name: 'Point approximation',
+      value: 'pointApproximation',
+    },
   ];
 
   // Descent variables
-  vm.descent = {
+  const descentDefault = {
     epsilon: 0.5,
     delta: 0.5,
     step: 1,
@@ -27,8 +39,11 @@ function descentController($scope, common) {
     },
     accuracy: 1e-5,
     exitRule: vm.exitRules[0],
+    compile: false,
   };
+  vm.descent = _.defaults(descentCache.get('/options') || {}, descentDefault);
   vm.sendDescent = (options) => {
+    descentCache.put('/options', angular.copy(options));
     common.sendDescent(options)
       .then((response) => {
         $scope.$broadcast('mno.approximations', response.data.response);
@@ -36,7 +51,7 @@ function descentController($scope, common) {
   };
 }
 
-descentController.$inject = ['$scope', 'common'];
+descentController.$inject = ['$scope', 'common', 'CacheFactory'];
 
 // Directives
 function descentDirective() {

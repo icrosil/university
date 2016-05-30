@@ -19,15 +19,8 @@
     <md-input-container flex="45">
       <label>Exit Rule</label>
       <md-select ng-model="descentCtrl.descent.exitRule">
-        <md-optgroup label="Exit rules">
-          <md-option ng-value="rule" ng-repeat="rule in descent.exitRules">{{rule.name}}</md-option>
-        </md-optgroup>
+        <md-option ng-value="rule.value" ng-repeat="rule in descentCtrl.exitRules">{{ rule.name }}</md-option>
       </md-select>
-      <md-icon md-svg-src="/images/ic_info_black_24px.svg" aria-label="android">
-        <md-tooltip md-direction="top">
-          Set exit rule from list (by abs from iterations, by point etc.)
-        </md-tooltip>
-      </md-icon>
     </md-input-container>
   </div>
   <div flex layout="row" layout-align="space-between center">
@@ -44,7 +37,7 @@
     </md-tooltip>
   </div>
   <div flex layout="row" layout-align="space-between center">
-    <md-input-container class="md-block" flex="50" flex-offset="25">
+    <md-input-container class="md-block" flex="45">
       <label>First step</label>
       <input ng-model="descentCtrl.descent.step" type="number" ng-min="0" step="0.5">
       <md-icon md-svg-src="/images/ic_info_black_24px.svg" aria-label="android">
@@ -52,6 +45,11 @@
           Set first step for method (could be changed with armijo rule) - positive
         </md-tooltip>
       </md-icon>
+    </md-input-container>
+    <md-input-container class="md-block" flex="45">
+      <md-checkbox ng-model="descentCtrl.descent.compile" aria-label="To compile?">
+        Compile
+      </md-checkbox>
     </md-input-container>
   </div>
   <md-subheader class="md-primary">

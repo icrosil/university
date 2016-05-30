@@ -53,6 +53,10 @@ bool stopCondition(
 ) {
   if (rule == "functionApproximation") {
     return fabs(f(approximation.back()) - f(approximation.end()[-2])) >= accuracy;
+  } else if (rule == "pointApproximation") {
+    Point last = approximation.back();
+    Point prelast = approximation.end()[-2];
+    return fabs((last - prelast).toDouble()) >= accuracy;
   }
   return false;
 }

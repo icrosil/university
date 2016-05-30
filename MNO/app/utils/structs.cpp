@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <math.h>
 
 using namespace std;
 
@@ -42,6 +43,11 @@ struct Point {
       double x = getX();
       double y = getY();
       return "[" + to_string(x) + ", " + to_string(y) + "]";
+    }
+    double toDouble() {
+      double x = getX();
+      double y = getY();
+      return sqrt(x * x + y * y);
     }
 
     double scalar(const Point a) {

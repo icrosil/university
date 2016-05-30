@@ -30,19 +30,34 @@ app.use(bodyParser.urlencoded({
 
 // Router
 app.post('/descent', (req, res) => {
-  const ls = spawn(`${__dirname}/../app/build/main`, [
-    '-px', req.body.point.x,
-    '-py', req.body.point.y,
-    '-s', req.body.step,
-    '-d', req.body.delta,
-    '-e', req.body.epsilon,
-    '-a', req.body.accuracy,
-    '-er', req.body.exitRule.value,
-  ]);
+  function run() {
+    const ls = spawn(`${__dirname}/../app/build/main`, [
+      '-px', req.body.point.x,
+      '-py', req.body.point.y,
+      '-s', req.body.step,
+      '-d', req.body.delta,
+      '-e', req.body.epsilon,
+      '-a', req.body.accuracy,
+      '-er', req.body.exitRule,
+    ]);
 
-  ls.stdout.on('data', (data) => {
-    res.send(JSON.parse(data));
-  });
+    ls.stdout.on('data', (data) => {
+      res.send(JSON.parse(data));
+    });
+  }
+  if (req.body.compile) {
+    const lsCompile = spawn('gcc', [
+      '-Wall',
+      '-o',
+      `${__dirname}/../app/build/main`,
+      `${__dirname}/../app/main.cpp`,
+      '-lstdc++',
+      '-std=c++11',
+    ]);
+    lsCompile.on('close', () => run());
+  } else {
+    run();
+  }
 });
 
 // Start server
