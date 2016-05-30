@@ -6,6 +6,10 @@
 // Imports
 @import "plot.scss";
 
+body {
+  overflow: visible !important;
+}
+
 // Main page
 .mno-toolbar {
   border-radius: 3px;

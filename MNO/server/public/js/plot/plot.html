@@ -3,9 +3,41 @@
   <span mathjax-bind="$root.function"></span>
 </md-subheader>
 <div flex layout="row" layout-align="space-between stretch" id="plot"></div>
-<md-subheader>
-  Last Approximation:
-  x <span ng-bind="plotCtrl.circles.x[plotCtrl.circles.x.length - 1] | number : 2"></span>,
-  y <span ng-bind="plotCtrl.circles.y[plotCtrl.circles.y.length - 1] | number : 2"></span>,
-  z <span ng-bind="plotCtrl.circles.z[plotCtrl.circles.z.length - 1] | number : 2"></span>
-</md-subheader>
+<!-- Table -->
+<md-container ng-if="plotCtrl.circles.x.length > 0">
+  <md-subheader>
+    Last Approximation:
+    x <span ng-bind="plotCtrl.circles.x[plotCtrl.circles.x.length - 1] | number : 4"></span>,
+    y <span ng-bind="plotCtrl.circles.y[plotCtrl.circles.y.length - 1] | number : 4"></span>,
+    z <span ng-bind="plotCtrl.circles.z[plotCtrl.circles.z.length - 1] | number : 4"></span>
+  </md-subheader>
+  <md-toolbar class="md-table-toolbar md-default">
+    <div class="md-toolbar-tools">
+      <span>Data set</span>
+    </div>
+  </md-toolbar>
+  <md-table-container>
+    <table md-table>
+      <thead md-head>
+        <tr md-row>
+          <th md-column md-numeric><span>Iteration</span></th>
+          <th md-column md-numeric><span>X</span></th>
+          <th md-column md-numeric><span>Y</span></th>
+          <th md-column md-numeric><span>Z</span></th>
+        </tr>
+      </thead>
+      <tbody md-body>
+        <tr md-row ng-repeat="(key, x) in plotCtrl.circles.x | limitTo: plotCtrl.query.limit: (plotCtrl.query.page - 1) * plotCtrl.query.limit">
+          <td md-cell ng-bind="(plotCtrl.query.page - 1) * plotCtrl.query.limit + key | number : 0"></td>
+          <td md-cell ng-bind="x | number : 4"></td>
+          <td md-cell ng-bind="plotCtrl.circles.y[key] | number : 4"></td>
+          <td md-cell ng-bind="plotCtrl.circles.z[key] | number : 4"></td>
+        </tr>
+      </tbody>
+    </table>
+  </md-table-container>
+
+  <md-table-pagination md-limit="plotCtrl.query.limit" md-limit-options="[15, 20, 30]" md-page="plotCtrl.query.page" md-total="{{plotCtrl.circles.x.length}}" md-page-select>
+  </md-table-pagination>
+
+</md-container>

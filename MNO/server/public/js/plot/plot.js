@@ -30,6 +30,10 @@ function plotLink($scope) {
     vm.circles.z = _.map(_.zip(d.x, d.y), _.spread($scope.$root.f));
     init();
   });
+  vm.query = {
+    limit: 20,
+    page: 1,
+  };
   vm.circles = {
     x: [],
     y: [],

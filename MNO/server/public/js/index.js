@@ -14,6 +14,8 @@ require('angular-cache');
 const _ = require('lodash');
 require('angular-material');
 require('angular-material/angular-material.css');
+const mdTable = require('angular-material-data-table');
+require('angular-material-data-table/dist/md-data-table.css');
 
 function runConfig($rootScope) {
   $rootScope.function = 'z = \\sqrt{x^2 + y^2 + 1} + \\frac{x}{2} - \\frac{y}{2}';
@@ -31,7 +33,7 @@ function config(CacheFactoryProvider) {
 config.$inject = ['CacheFactoryProvider'];
 
 angular
-  .module('mno', ['ngMaterial', 'angular-cache'])
+  .module('mno', ['ngMaterial', 'angular-cache', mdTable])
   .run(runConfig)
   .config(config);
 
