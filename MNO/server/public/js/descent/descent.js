@@ -38,7 +38,7 @@ function descentController($scope, common, CacheFactory) {
       y: 10,
     },
     accuracy: 1e-5,
-    exitRule: vm.exitRules[0],
+    exitRule: vm.exitRules[0].value,
     compile: false,
   };
   vm.descent = _.defaults(descentCache.get('/options') || {}, descentDefault);
