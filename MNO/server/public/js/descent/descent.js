@@ -49,6 +49,10 @@ function descentController($scope, common, CacheFactory) {
         $scope.$broadcast('mno.approximations', response.data.response);
       });
   };
+  vm.clearCache = () => {
+    descentCache.put('/options', {});
+    vm.descent = _.defaults(descentCache.get('/options') || {}, descentDefault);
+  };
 }
 
 descentController.$inject = ['$scope', 'common', 'CacheFactory'];

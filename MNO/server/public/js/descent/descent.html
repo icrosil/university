@@ -78,7 +78,10 @@
       </md-icon>
     </md-input-container>
   </div>
-  <div layout="row" layout-align="end center">
+  <div layout="row" layout-align="space-between start">
+    <md-button class="md-raised md-primary" ng-click="descentCtrl.clearCache()">
+      Clear cache
+    </md-button>
     <md-button class="md-raised md-primary" ng-disabled="descentCtrl.$invalid" ng-click="descentCtrl.sendDescent(descentCtrl.descent)">
       Send
     </md-button>
