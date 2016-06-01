@@ -8,3 +8,4 @@ To start work proceed next steps:
 Works:
 1. Visualization for pendulum motion. With forced oscillations.
    Based on [Burak Kanber pendulum](http://burakkanber.com/blog/modeling-physics-in-javascript-introduction/)
+2. Function of forced oscillations could be wrong. (Still in progress)

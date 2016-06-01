@@ -29,8 +29,25 @@ var pendulum = {
   theta: (Math.PI / 2) - 0.05,
   omega: 0,
   alpha: 0,
-  J: 0
+  J: 0,
 };
+var pendulumForce = {
+  F0: 500,
+  OMEGA: function(t) {
+    return Math.PI * t / 1000;
+  },
+};
+// My Stuff
+function forcesCos(t) {
+  var fi = pendulumForce.F0 / pendulum.mass;
+  var first = fi / (pendulum.omega * pendulum.omega - pendulumForce.OMEGA(t) * pendulumForce.OMEGA(t));
+  console.log(first);
+  return first  * Math.cos(pendulumForce.OMEGA(t) * t);
+}
+function forcesSin(t) {
+  var fi = pendulumForce.F0 / pendulum.mass;
+  return fi / (pendulum.omega * pendulum.omega - pendulumForce.OMEGA(t) * pendulumForce.OMEGA(t)) * Math.sin(pendulumForce.OMEGA(t) * t);
+}
 var setup = function() {
   pendulum.J = pendulum.mass * pendulum.length * pendulum.length / 500;
   canvas = document.getElementById("canvas");
@@ -42,21 +59,23 @@ var setup = function() {
   // loopTimer = setInterval(loop, frameDelay);
   lastTime = new Date();
   requestAnimFrame(loop);
-}
+};
+
 var loop = function(time) {
   var deltaT = (time - lastTime.getTime()) / 1000;
 
-  /*
-  When switching away from the window,
-  requestAnimationFrame is paused. Switching back
-  will give us a giant deltaT and cause an explosion.
-  We make sure that the biggest possible deltaT is 50 ms
+  /**
+   * When switching away from the window,
+   * requestAnimationFrame is paused. Switching back
+   * will give us a giant deltaT and cause an explosion.
+   * We make sure that the biggest possible deltaT is 50 ms
   */
 
   if (deltaT > 0.050) {
     deltaT = 0.050;
+  } else {
+    deltaT = 0.01;
   }
-  deltaT = 0.01;
 
   time = new Date(time);
 
@@ -76,9 +95,12 @@ var loop = function(time) {
 
   /* Update acceleration */
   pendulum.alpha = alpha;
-
-  var px = width / 2 + pendulum.length * Math.cos(pendulum.theta);
-  var py = 50 + pendulum.length * Math.sin(pendulum.theta);
+  console.log(forcesCos(time).toPrecision(1), forcesSin(time).toPrecision(1));
+  var px = width / 2 + pendulum.length * (Math.cos(pendulum.theta)) + forcesSin(time);
+  var py = 50 + pendulum.length * (Math.sin(pendulum.theta)) + forcesCos(time);
+  // console.log(px, py);
+  // pendulum.x = Math.max(pendulum.x || px, px);
+  // pendulum.y = Math.max(pendulum.x || px, px);
 
 
   // Start drawing
@@ -105,7 +127,6 @@ var loop = function(time) {
   ctx.closePath();
 
   // Draw hour hand
-
   var ang = (time.getHours() % 12) + (time.getMinutes() / 60);
   ang *= 30 * Math.PI / 180;
   ang -= Math.PI / 2;
