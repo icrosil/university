@@ -28,6 +28,19 @@ app.use(bodyParser.urlencoded({
   extended: true,
 }));
 
+// Compile feature
+function compile(run) {
+  const lsCompile = spawn('gcc', [
+    '-Wall',
+    '-o',
+    `${__dirname}/../app/build/main`,
+    `${__dirname}/../app/main.cpp`,
+    '-lstdc++',
+    '-std=c++11',
+  ]);
+  lsCompile.on('close', run);
+}
+
 // Router
 app.post('/descent', (req, res) => {
   function run() {
@@ -39,25 +52,30 @@ app.post('/descent', (req, res) => {
       '-e', req.body.epsilon,
       '-a', req.body.accuracy,
       '-er', req.body.exitRule,
+      '-m', 'descent',
     ]);
 
     ls.stdout.on('data', (data) => {
       res.send(JSON.parse(data));
     });
   }
-  if (req.body.compile) {
-    const lsCompile = spawn('gcc', [
-      '-Wall',
-      '-o',
-      `${__dirname}/../app/build/main`,
-      `${__dirname}/../app/main.cpp`,
-      '-lstdc++',
-      '-std=c++11',
+  return req.body.compile ? compile(run) : run();
+});
+
+app.post('/conjugate', (req, res) => {
+  function run() {
+    const ls = spawn(`${__dirname}/../app/build/main`, [
+      '-px', req.body.point.x,
+      '-py', req.body.point.y,
+      '-a', req.body.accuracy,
+      '-m', 'conjugate',
     ]);
-    lsCompile.on('close', () => run());
-  } else {
-    run();
+
+    ls.stdout.on('data', (data) => {
+      res.send(JSON.parse(data));
+    });
   }
+  return req.body.compile ? compile(run) : run();
 });
 
 // Start server

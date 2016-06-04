@@ -22,10 +22,10 @@ MathJax.Hub.Config({
 });
 MathJax.Hub.Configured();
 
-function plotLink($scope) {
+function plotLink($scope, $timeout) {
   const vm = this;
 
-  $scope.$on('mno.approximations', (e, d) => {
+  $scope.$on(`mno.approximations.${vm.id}`, (e, d) => {
     _.extend(vm.circles, d);
     vm.circles.z = _.map(_.zip(d.x, d.y), _.spread($scope.$root.f));
     init();
@@ -50,35 +50,39 @@ function plotLink($scope) {
       opacity: 0.9,
     },
     type: 'scatter3d',
+    name: 'Approximations',
   };
   const z = [];
   const x = [];
   const y = [];
 
-  for (let i = -100; i < 100; i++) {
+  _.times(100, (ival) => {
+    const i = ival - 50;
     x.push(i);
     y.push(i);
     z.push([]);
-    for (let j = -100; j < 100; j++) {
+    _.times(100, (jval) => {
+      const j = jval - 50;
       z[z.length - 1].push($scope.$root.f(j, i));
-    }
-  }
+    });
+  });
 
   const surface = {
     z,
     x,
     y,
     type: 'surface',
+    name: 'Real function',
   };
 
   init();
 
   function init() {
-    Plotly.newPlot('plot', [surface, vm.circles]);
+    $timeout(_.partial(Plotly.newPlot, vm.id, [surface, vm.circles]));
   }
 }
 
-plotLink.$inject = ['$scope'];
+plotLink.$inject = ['$scope', '$timeout'];
 
 // Directives
 function plotDirective() {
@@ -86,8 +90,11 @@ function plotDirective() {
     restrict: 'E',
     templateUrl: '/js/plot/plot.html',
     controller: plotLink,
-    scope: {},
+    scope: {
+      id: '=',
+    },
     controllerAs: 'plotCtrl',
+    bindToController: true,
   };
 }
 

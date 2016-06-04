@@ -11,11 +11,11 @@ require('../scss/index.scss');
 // Angular
 const angular = require('angular');
 require('angular-cache');
-const _ = require('lodash');
 require('angular-material');
 require('angular-material/angular-material.css');
 const mdTable = require('angular-material-data-table');
 require('angular-material-data-table/dist/md-data-table.css');
+const _ = require('lodash');
 
 function runConfig($rootScope) {
   $rootScope.function = 'z = \\sqrt{x^2 + y^2 + 1} + \\frac{x}{2} - \\frac{y}{2}';
@@ -40,4 +40,5 @@ angular
 // Application
 require('./service/common.js');
 require('./descent/descent.js');
+require('./conjugate/conjugate.js');
 require('./plot/plot.js');

@@ -46,7 +46,7 @@ function descentController($scope, common, CacheFactory) {
     descentCache.put('/options', angular.copy(options));
     common.sendDescent(options)
       .then((response) => {
-        $scope.$broadcast('mno.approximations', response.data.response);
+        $scope.$broadcast('mno.approximations.plotDescent', response.data.response);
       });
   };
   vm.clearCache = () => {
