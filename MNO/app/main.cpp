@@ -14,12 +14,16 @@ using namespace std;
 
 // function as sqrt(x^2 + y^2 + 1) + x/2 - y/2
 double f(Point a) {
-  return sqrt(a.x * a.x + a.y * a.y + 1) + a.x / 2. - a.y /2.;
+  double x = a.x;
+  double y = a.y;
+  return sqrt(x * x + y * y + 1) + x / 2. - y /2.;
 }
 
 // grad(f)
 Point gradf(Point a) {
-  return Point(a.x / sqrt(a.x * a.x + a.y * a.y + 1) + 0.5, a.y / sqrt(a.x * a.x + a.y * a.y + 1) - 0.5);
+  double x = a.x;
+  double y = a.y;
+  return Point(x / sqrt(x * x + y * y + 1) + 0.5, y / sqrt(x * x + y * y + 1) - 0.5);
 }
 
 int main(int argc, char* argv[]) {
@@ -30,6 +34,7 @@ int main(int argc, char* argv[]) {
   double eps = 0.5;
   double accuracy = 1e-5;
   string rule = "functionApproximation";
+  string method = "descent";
 
   // Read params from arguments
   for (int i = 1; i < argc; i++) {
@@ -49,10 +54,19 @@ int main(int argc, char* argv[]) {
         accuracy = atof(argv[i + 1]);
       } else if (str == "-er") {
         rule = argv[i + 1];
+      } else if (str == "-m") {
+        method = argv[i + 1];
       }
     }
   }
 
-  gradDescMethod(f, gradf, a, step, delta, eps, accuracy, rule);
+  vector<Point> results;
+  if (method == "descent") {
+    results = gradDescMethod(f, gradf, a, step, delta, eps, accuracy, rule);
+  } else if (method == "conjugate") {
+    results = conjGradMethod(f, gradf, a, accuracy);
+  }
+
+  makeJson(results);
   return 0;
 }

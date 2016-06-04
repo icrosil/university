@@ -2,7 +2,7 @@
  * author - Illia Olenchenko
  * group  - PM-1 (OM)
  */
-
+#pragma once
 #include <cmath>
 #include <vector>
 #include <iostream>
@@ -76,7 +76,7 @@ bool stopCondition(
  * @param  rule           What rule we should use for stop
  * @return                status of execution
  */
-int gradDescMethod(
+vector<Point> gradDescMethod(
   double (*f)(Point),
   Point (*gradf)(Point),
   Point a,
@@ -96,7 +96,5 @@ int gradDescMethod(
     approximation.push_back(Point(a));
   } while(stopCondition(f, approximation, accuracy, rule));
 
-  makeJson(approximation);
-
-  return 0;
+  return approximation;
 }
