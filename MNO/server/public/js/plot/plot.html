@@ -1,15 +1,39 @@
+<!-- Plot html -->
 <md-divider></md-divider>
 <md-subheader>
   <span mathjax-bind="$root.function"></span>
 </md-subheader>
+<div flex layout="row" layout-align="space-between center">
+  <md-input-container class="md-block">
+    <label>From</label>
+    <input ng-model="plotCtrl.plotParams.sizes.from" type="number" ng-max="100" ng-min="-100" step="10">
+    <md-icon md-svg-src="/images/ic_info_black_24px.svg" aria-label="android">
+      <md-tooltip md-direction="top">
+        Set plot left bound (from -100 to 100)
+      </md-tooltip>
+    </md-icon>
+  </md-input-container>
+  <md-input-container class="md-block">
+    <label>To</label>
+    <input ng-model="plotCtrl.plotParams.sizes.to" type="number" ng-max="100" ng-min="-100" step="10">
+    <md-icon md-svg-src="/images/ic_info_black_24px.svg" aria-label="android">
+      <md-tooltip md-direction="top">
+        Set plot right bound (from -100 to 100)
+      </md-tooltip>
+    </md-icon>
+  </md-input-container>
+  <md-button class="md-raised md-primary" ng-click="plotCtrl.redraw()">
+    Redraw
+  </md-button>
+</div>
 <div flex layout="row" layout-align="space-between stretch" id="{{plotCtrl.id}}"></div>
 <!-- Table -->
-<md-container ng-if="plotCtrl.circles.x.length > 0">
+<md-container ng-if="plotCtrl.plotParams.circles.x.length > 0">
   <md-subheader>
     Last Approximation:
-    x <span ng-bind="plotCtrl.circles.x[plotCtrl.circles.x.length - 1] | number : 4"></span>,
-    y <span ng-bind="plotCtrl.circles.y[plotCtrl.circles.y.length - 1] | number : 4"></span>,
-    z <span ng-bind="plotCtrl.circles.z[plotCtrl.circles.z.length - 1] | number : 4"></span>
+    x <span ng-bind="plotCtrl.plotParams.circles.x[plotCtrl.plotParams.circles.x.length - 1] | number : 4"></span>,
+    y <span ng-bind="plotCtrl.plotParams.circles.y[plotCtrl.plotParams.circles.y.length - 1] | number : 4"></span>,
+    z <span ng-bind="plotCtrl.plotParams.circles.z[plotCtrl.plotParams.circles.z.length - 1] | number : 4"></span>
   </md-subheader>
   <md-toolbar class="md-table-toolbar md-default">
     <div class="md-toolbar-tools">
@@ -27,17 +51,17 @@
         </tr>
       </thead>
       <tbody md-body>
-        <tr md-row ng-if="x" ng-repeat="(key, x) in plotCtrl.circles.x | limitTo: plotCtrl.query.limit: (plotCtrl.query.page - 1) * plotCtrl.query.limit track by key">
-          <td md-cell ng-bind="(plotCtrl.query.page - 1) * plotCtrl.query.limit + key | number : 0"></td>
-          <td md-cell ng-bind="plotCtrl.circles.x[(plotCtrl.query.page - 1) * plotCtrl.query.limit + key] | number : 4"></td>
-          <td md-cell ng-bind="plotCtrl.circles.y[(plotCtrl.query.page - 1) * plotCtrl.query.limit + key] | number : 4"></td>
-          <td md-cell ng-bind="plotCtrl.circles.z[(plotCtrl.query.page - 1) * plotCtrl.query.limit + key] | number : 4"></td>
+        <tr md-row ng-if="x" ng-repeat="(key, x) in plotCtrl.plotParams.circles.x | limitTo: plotCtrl.plotParams.query.limit: (plotCtrl.plotParams.query.page - 1) * plotCtrl.plotParams.query.limit track by key">
+          <td md-cell ng-bind="(plotCtrl.plotParams.query.page - 1) * plotCtrl.plotParams.query.limit + key | number : 0"></td>
+          <td md-cell ng-bind="plotCtrl.plotParams.circles.x[(plotCtrl.plotParams.query.page - 1) * plotCtrl.plotParams.query.limit + key] | number : 4"></td>
+          <td md-cell ng-bind="plotCtrl.plotParams.circles.y[(plotCtrl.plotParams.query.page - 1) * plotCtrl.plotParams.query.limit + key] | number : 4"></td>
+          <td md-cell ng-bind="plotCtrl.plotParams.circles.z[(plotCtrl.plotParams.query.page - 1) * plotCtrl.plotParams.query.limit + key] | number : 4"></td>
         </tr>
       </tbody>
     </table>
   </md-table-container>
 
-  <md-table-pagination md-limit="plotCtrl.query.limit" md-limit-options="[15, 20, 30]" md-page="plotCtrl.query.page" md-total="{{plotCtrl.circles.x.length}}" md-page-select>
+  <md-table-pagination md-limit="plotCtrl.plotParams.query.limit" md-limit-options="[15, 20, 30]" md-page="plotCtrl.plotParams.query.page" md-total="{{plotCtrl.plotParams.circles.x.length}}" md-page-select>
   </md-table-pagination>
 
 </md-container>
