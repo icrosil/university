@@ -37,7 +37,7 @@ double armijo(
 }
 
 /**
- * How we should stop our calculations/
+ * How we should stop our calculations
  * @method stopCondition
  * @param  f                         main task function
  * @param  approximation             vector of current approximations

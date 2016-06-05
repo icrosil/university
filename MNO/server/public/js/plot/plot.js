@@ -27,8 +27,8 @@ function plotLink($scope, $timeout, CacheFactory) {
 
   // Retrieving data
   $scope.$on(`mno.approximations.${vm.id}`, (e, d) => {
-    _.extend(vm.circles, d);
-    vm.circles.z = _.map(_.zip(d.x, d.y), _.spread($scope.$root.f));
+    _.extend(vm.plotParams.circles, d);
+    vm.plotParams.circles.z = _.map(_.zip(d.x, d.y), _.spread($scope.$root.f));
     vm.redraw();
   });
 

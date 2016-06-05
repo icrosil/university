@@ -66,16 +66,22 @@ vector<Point> conjGradMethod(
   string rule,
   int polakN
 ) {
+  // Setting first steps and default values
   vector<Point> approximation = vector<Point>(1, a);
   vector<Point> grads = vector<Point>(1, gradf(approximation.back()));
   vector<double> b = vector<double>(0);
   vector<Point> d = vector<Point>(1, gradf(approximation.back()) * (-1));
   vector<double> steps = vector<double>(0);
   while(grads.back().toDouble() > accuracy) {
+    // Finding next step we will use by optimization problem
     steps.push_back(mint(approximation.back(), d.back()));
+    // Setting next approximation
     approximation.push_back(approximation.back() + (d.back() * steps.back()));
+    // Adding new gradient of new approximation
     grads.push_back(gradf(approximation.back()));
+    // Calculating B by one of 2 rules
     b.push_back(findB(rule, grads, polakN));
+    // Adding new value for exit rule
     d.push_back(grads.back() * (-1) + d.back() * b.back());
   }
 
