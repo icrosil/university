@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
   double eps = 0.5;
   double accuracy = 1e-5;
   string rule = "functionApproximation";
-  string method = "descent";
+  string method = "conjugate";
 
   // Read params from arguments
   for (int i = 1; i < argc; i++) {
@@ -64,7 +64,8 @@ int main(int argc, char* argv[]) {
   if (method == "descent") {
     results = gradDescMethod(f, gradf, a, step, delta, eps, accuracy, rule);
   } else if (method == "conjugate") {
-    results = conjGradMethod(f, gradf, a, accuracy);
+    string rule = "polak";
+    results = conjGradMethod(f, gradf, a, accuracy, rule);
   }
 
   makeJson(results);

@@ -12,6 +12,7 @@
 #include "./gradDesc.cpp"
 
 
+// Optimization rule for exact function
 double mint(Point s, Point com) {
   double x1 = s.x;
   double x2 = com.x;
@@ -24,6 +25,27 @@ double mint(Point s, Point com) {
   double t2 = (-b - sqrt(b * b - 4 * a * c)) / 2. / a;
   return a * t1 * t1 + b * t1 + c < a * t2 * t2 + b * t2 + c ? t1 : t2;
 }
+
+// b func choosing
+// 'fletcher' and 'polak' available
+double findB(
+  string rule,
+  vector<Point> grads
+) {
+  double result;
+  int n = 5;
+  if (rule == "fletcher") {
+    result = grads.back().toDouble() * grads.back().toDouble() / grads.end()[-2].toDouble() / grads.end()[-2].toDouble();
+  } else if (rule == "polak") {
+    if (grads.size() % n == 0) {
+      result = 0;
+    } else {
+      result = grads.back().scalar(grads.back() - grads.end()[-2]) / grads.back().scalar(grads.back());
+    }
+  }
+  return result;
+}
+
 
 /**
  * Main method for computing results.
@@ -40,7 +62,8 @@ vector<Point> conjGradMethod(
   double (*f)(Point),
   Point (*gradf)(Point),
   Point a,
-  double accuracy
+  double accuracy,
+  string rule
 ) {
   vector<Point> approximation = vector<Point>(1, a);
   vector<Point> grads = vector<Point>(1, gradf(approximation.back()));
@@ -51,7 +74,7 @@ vector<Point> conjGradMethod(
     steps.push_back(mint(approximation.back(), d.back()));
     approximation.push_back(approximation.back() + (d.back() * steps.back()));
     grads.push_back(gradf(approximation.back()));
-    b.push_back(grads.back().toDouble() * grads.back().toDouble() / grads.end()[-2].toDouble() / grads.end()[-2].toDouble());
+    b.push_back(findB(rule, grads));
     d.push_back(grads.back() * (-1) + d.back() * b.back());
   }
 
