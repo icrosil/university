@@ -6,19 +6,19 @@
 <div flex layout="row" layout-align="space-between center">
   <md-input-container class="md-block">
     <label>From</label>
-    <input ng-model="plotCtrl.plotParams.sizes.from" type="number" ng-max="100" ng-min="-100" step="10">
+    <input ng-model="plotCtrl.plotParams.sizes.from" type="number" ng-max="{{plotCtrl.plotParams.sizes.to}}" ng-min="-100" step="10">
     <md-icon md-svg-src="/images/ic_info_black_24px.svg" aria-label="android">
       <md-tooltip md-direction="top">
-        Set plot left bound (from -100 to 100)
+        Set plot left bound (up from -100)
       </md-tooltip>
     </md-icon>
   </md-input-container>
   <md-input-container class="md-block">
     <label>To</label>
-    <input ng-model="plotCtrl.plotParams.sizes.to" type="number" ng-max="100" ng-min="-100" step="10">
+    <input ng-model="plotCtrl.plotParams.sizes.to" type="number" ng-max="100" ng-min="{{plotCtrl.plotParams.sizes.from}}" step="10">
     <md-icon md-svg-src="/images/ic_info_black_24px.svg" aria-label="android">
       <md-tooltip md-direction="top">
-        Set plot right bound (from -100 to 100)
+        Set plot right bound (up to 100)
       </md-tooltip>
     </md-icon>
   </md-input-container>
