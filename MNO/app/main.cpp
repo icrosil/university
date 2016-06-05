@@ -33,7 +33,8 @@ int main(int argc, char* argv[]) {
   double delta = 0.5;
   double eps = 0.5;
   double accuracy = 1e-5;
-  string rule = "functionApproximation";
+  int polakN = 5;
+  string rule = "polak";
   string method = "conjugate";
 
   // Read params from arguments
@@ -56,6 +57,8 @@ int main(int argc, char* argv[]) {
         rule = argv[i + 1];
       } else if (str == "-m") {
         method = argv[i + 1];
+      } else if (str == "-n") {
+        polakN = atoi(argv[i + 1]);
       }
     }
   }
@@ -64,8 +67,7 @@ int main(int argc, char* argv[]) {
   if (method == "descent") {
     results = gradDescMethod(f, gradf, a, step, delta, eps, accuracy, rule);
   } else if (method == "conjugate") {
-    string rule = "polak";
-    results = conjGradMethod(f, gradf, a, accuracy, rule);
+    results = conjGradMethod(f, gradf, a, accuracy, rule, polakN);
   }
 
   makeJson(results);

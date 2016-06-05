@@ -69,6 +69,8 @@ app.post('/conjugate', (req, res) => {
       '-py', req.body.point.y,
       '-a', req.body.accuracy,
       '-m', 'conjugate',
+      '-er', req.body.rule,
+      '-n', req.body.polakN,
     ]);
 
     ls.stdout.on('data', (data) => {

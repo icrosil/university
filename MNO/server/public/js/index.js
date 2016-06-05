@@ -24,13 +24,16 @@ function runConfig($rootScope) {
 }
 runConfig.$inject = ['$rootScope'];
 
-function config(CacheFactoryProvider) {
+function config(CacheFactoryProvider, $mdThemingProvider) {
   angular.extend(CacheFactoryProvider.defaults, {
     maxAge: 15 * 60 * 1000,
     storageMode: 'localStorage',
   });
+  $mdThemingProvider.theme('default')
+    .primaryPalette('cyan')
+    .accentPalette('blue');
 }
-config.$inject = ['CacheFactoryProvider'];
+config.$inject = ['CacheFactoryProvider', '$mdThemingProvider'];
 
 angular
   .module('mno', ['ngMaterial', 'angular-cache', mdTable])

@@ -30,10 +30,10 @@ double mint(Point s, Point com) {
 // 'fletcher' and 'polak' available
 double findB(
   string rule,
-  vector<Point> grads
+  vector<Point> grads,
+  int n
 ) {
-  double result;
-  int n = 5;
+  double result = 0;
   if (rule == "fletcher") {
     result = grads.back().toDouble() * grads.back().toDouble() / grads.end()[-2].toDouble() / grads.end()[-2].toDouble();
   } else if (rule == "polak") {
@@ -63,7 +63,8 @@ vector<Point> conjGradMethod(
   Point (*gradf)(Point),
   Point a,
   double accuracy,
-  string rule
+  string rule,
+  int polakN
 ) {
   vector<Point> approximation = vector<Point>(1, a);
   vector<Point> grads = vector<Point>(1, gradf(approximation.back()));
@@ -74,7 +75,7 @@ vector<Point> conjGradMethod(
     steps.push_back(mint(approximation.back(), d.back()));
     approximation.push_back(approximation.back() + (d.back() * steps.back()));
     grads.push_back(gradf(approximation.back()));
-    b.push_back(findB(rule, grads));
+    b.push_back(findB(rule, grads, polakN));
     d.push_back(grads.back() * (-1) + d.back() * b.back());
   }
 

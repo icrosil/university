@@ -18,7 +18,17 @@ function conjugateController($scope, common, CacheFactory) {
   }
 
 
-  // Descent variables
+  // Conjugate variables
+  vm.rules = [
+    {
+      name: 'Fletcher Reeves',
+      value: 'fletcher',
+    },
+    {
+      name: 'Polak Ribiere',
+      value: 'polak',
+    },
+  ];
   const conjugateDefault = {
     point: {
       x: 10,
@@ -26,6 +36,8 @@ function conjugateController($scope, common, CacheFactory) {
     },
     accuracy: 1e-5,
     compile: false,
+    polakN: 5,
+    rule: vm.rules[0].value,
   };
   vm.conjugate = _.defaults(conjugateCache.get('/options') || {}, conjugateDefault);
   vm.sendConjugate = (options) => {

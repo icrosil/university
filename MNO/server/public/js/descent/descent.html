@@ -19,7 +19,7 @@
     <md-input-container flex="45">
       <label>Exit Rule</label>
       <md-select ng-model="descentCtrl.descent.exitRule">
-        <md-option ng-value="rule.value" ng-repeat="rule in descentCtrl.exitRules">{{ rule.name }}</md-option>
+        <md-option ng-value="rule.value" ng-repeat="rule in descentCtrl.exitRules" ng-bind="rule.name"></md-option>
       </md-select>
     </md-input-container>
   </div>

@@ -35,6 +35,31 @@
       Set point that we want to start from
     </md-tooltip>
   </div>
+  <div class="">
+    <md-subheader class="md-primary">
+      Method and additional params
+      <md-tooltip md-direction="top">
+        What method to use for b finding
+      </md-tooltip>
+    </md-subheader>
+    <div flex layout="row" layout-align="space-between center">
+      <md-input-container flex="45">
+        <label>Method</label>
+        <md-select ng-model="conjugateCtrl.conjugate.rule">
+          <md-option ng-value="rule.value" ng-repeat="rule in conjugateCtrl.rules" ng-bind="rule.name"></md-option>
+        </md-select>
+      </md-input-container>
+      <md-input-container class="md-block" flex="45" ng-if="conjugateCtrl.conjugate.rule == 'polak'">
+        <label>N Polak parameter</label>
+        <input ng-model="conjugateCtrl.conjugate.polakN" type="number" ng-min="0" step="1">
+        <md-icon md-svg-src="/images/ic_info_black_24px.svg" aria-label="android">
+          <md-tooltip md-direction="top">
+            For clearing gradients to fastest descent
+          </md-tooltip>
+        </md-icon>
+      </md-input-container>
+    </div>
+  </div>
   <div layout="row" layout-align="space-between start">
     <md-button class="md-raised md-primary" ng-click="conjugateCtrl.clearCache()">
       Clear cache
