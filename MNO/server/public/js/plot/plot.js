@@ -88,12 +88,12 @@ function plotLink($scope, $timeout, CacheFactory) {
     x.length = 0;
     y.length = 0;
     z.length = 0;
-    _.times(vm.plotParams.sizes.times, (ival) => {
+    _.times(vm.plotParams.sizes.times + 1, (ival) => {
       const i = ival - vm.plotParams.sizes.times / 2;
       x.push(i);
       y.push(i);
       z.push([]);
-      _.times(vm.plotParams.sizes.times, (jval) => {
+      _.times(vm.plotParams.sizes.times + 1, (jval) => {
         const j = jval - vm.plotParams.sizes.times / 2;
         z[z.length - 1].push($scope.$root.f(j, i));
       });

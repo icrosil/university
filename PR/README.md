@@ -17,10 +17,8 @@ Works:
 3. How much is influense here in D2 and D3 ?
 4. How to build ellipse around set of points?
    Is there any difference to shrink or grow rects?
-5. Simple categorizition.
+5. Simple categorizition (dont work)
 6. In this work we want to consider other ways to compare vectors.
    Here we testing with standard method Delta and Interval Tree.
-7. Building min rects and compare their squares.
-8. Optimal finding of split line.
 
 For program you need POK directories `./files/D2/D201.POK ... ./files/D3/D341.POK`.
