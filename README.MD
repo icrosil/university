@@ -24,3 +24,8 @@ Each folder has readme file with description.
 
 -   Professional and Corporate Ethics - (PIKE)
     1 presentation using 'reveal.js' slides.
+
+-   Numerical Simulation Technology - (NST)
+    3 works of visual modeling of dynamic process
+    (wrap with water/air/etc of different constructions)
+    Tech used - JS (React/ES6)
