@@ -13,7 +13,7 @@ const renderCriticalPoints = ({ xScale, yScale }) => (coords, index) => {
 renderCriticalPoints.propTypes = {
   xScale: React.PropTypes.func.isRequired,
   yScale: React.PropTypes.func.isRequired,
-  domains: React.PropTypes.object.isRequired,
+  DOMAINS: React.PropTypes.object.isRequired,
 };
 
 const renderCenters = ({ xScale, yScale }) => (coords, index) => {
@@ -30,18 +30,18 @@ const renderCenters = ({ xScale, yScale }) => (coords, index) => {
 renderCenters.propTypes = {
   xScale: React.PropTypes.func.isRequired,
   yScale: React.PropTypes.func.isRequired,
-  domains: React.PropTypes.object.isRequired,
+  DOMAINS: React.PropTypes.object.isRequired,
 };
 
 const styleLine = {
   strokeWidth: 1,
   stroke: 'black',
 };
-const renderShape = ({ xScale, yScale, domains }) => {
-  const xSmall = xScale(((domains.W.max - domains.W.min) / 2) - 0.5);
-  const xBig = xScale(((domains.W.max - domains.W.min) / 2) + 0.5);
-  const ySmall = yScale(((domains.H.max - domains.H.min) / 2) - 0.5);
-  const yBig = yScale(((domains.H.max - domains.H.min) / 2) + 0.5);
+const renderShape = ({ xScale, yScale, DOMAINS }) => {
+  const xSmall = xScale(((DOMAINS.W.max - DOMAINS.W.min) / 2) - 0.5);
+  const xBig = xScale(((DOMAINS.W.max - DOMAINS.W.min) / 2) + 0.5);
+  const ySmall = yScale(((DOMAINS.H.max - DOMAINS.H.min) / 2) - 0.5);
+  const yBig = yScale(((DOMAINS.H.max - DOMAINS.H.min) / 2) + 0.5);
   const line1 = {
     x1: xSmall,
     x2: xSmall,
@@ -75,7 +75,7 @@ const renderShape = ({ xScale, yScale, domains }) => {
 renderShape.propTypes = {
   xScale: React.PropTypes.func.isRequired,
   yScale: React.PropTypes.func.isRequired,
-  domains: React.PropTypes.object.isRequired,
+  DOMAINS: React.PropTypes.object.isRequired,
 };
 
 const IShape = (props) => (
@@ -88,7 +88,7 @@ const IShape = (props) => (
 
 IShape.propTypes = {
   M: React.PropTypes.number.isRequired,
-  domains: React.PropTypes.object.isRequired,
+  DOMAINS: React.PropTypes.object.isRequired,
   dataCritical: React.PropTypes.array.isRequired,
   dataCenters: React.PropTypes.array.isRequired,
 };

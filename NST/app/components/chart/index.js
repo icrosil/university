@@ -8,6 +8,6 @@ const styles = {
   padding: 30,
 };
 
-const Chart = () => (<ScatterPlot {...this.state} {...styles} />);
+const Chart = (props) => (<ScatterPlot {...this.state} {...styles} {...props} />);
 
 export default Chart;

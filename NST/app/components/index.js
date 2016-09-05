@@ -1,11 +1,11 @@
 import React from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
+import { Tabs, Tab } from 'material-ui/Tabs';
 import Paper from 'material-ui/Paper';
-import Drawer from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem';
+import _ from 'lodash';
 
-import Chart from './chart';
+import LabFirst from './labFirst';
 import './styles/main.scss';
 
 const styles = {
@@ -13,38 +13,48 @@ const styles = {
   justifyContent: 'center',
 };
 
-class Main extends React.Component {
+export default class TabsExampleControlled extends React.Component {
+
   constructor(props) {
     super(props);
-    this.state = { open: false };
+    this.state = {
+      value: 'static',
+    };
   }
-  toggleDrawer() {
-    this.setState({ open: !this.state.open });
-  }
+
+  handleChange = (value) => {
+    if (_.isString(value)) {
+      this.setState({
+        value,
+      });
+    }
+  };
+
   render() {
     return (
       <MuiThemeProvider>
         <div>
           <AppBar
             title="Illia Olenchenko PM-2 (OM)"
-            onLeftIconButtonTouchTap={() => this.toggleDrawer()}
+            showMenuIconButton={false}
           />
-          <Paper zDepth={2}>
-            <div style={styles} className="chart">
-              <Chart />
-            </div>
-          </Paper>
-          <Drawer
-            open={this.state.open}
-            docked={false}
-            onRequestChange={(open) => this.setState({ open })}
+          <Tabs
+            value={this.state.value}
+            onChange={this.handleChange}
           >
-            <MenuItem>Lab 1 - Static</MenuItem>
-          </Drawer>
+            <Tab label="Static" value="static" >
+              {
+                this.state.value === 'static' &&
+                  <Paper zDepth={2}>
+                    <div style={styles}>
+                      <LabFirst />
+                    </div>
+                  </Paper>
+              }
+            </Tab>
+          </Tabs>
         </div>
       </MuiThemeProvider>
     );
   }
 }
-
-export default Main;
