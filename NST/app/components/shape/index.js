@@ -38,10 +38,10 @@ const styleLine = {
   stroke: 'black',
 };
 const renderShape = ({ xScale, yScale, DOMAINS }) => {
-  const xSmall = xScale(((DOMAINS.W.max - DOMAINS.W.min) / 2) - 0.5);
-  const xBig = xScale(((DOMAINS.W.max - DOMAINS.W.min) / 2) + 0.5);
-  const ySmall = yScale(((DOMAINS.H.max - DOMAINS.H.min) / 2) - 0.5);
-  const yBig = yScale(((DOMAINS.H.max - DOMAINS.H.min) / 2) + 0.5);
+  const xSmall = xScale((((DOMAINS.W.max - DOMAINS.W.min) / 2) - 0.5) + DOMAINS.W.min);
+  const xBig = xScale(((DOMAINS.W.max - DOMAINS.W.min) / 2) + 0.5 + DOMAINS.W.min);
+  const ySmall = yScale((((DOMAINS.H.max - DOMAINS.H.min) / 2) - 0.5) + DOMAINS.H.min);
+  const yBig = yScale(((DOMAINS.H.max - DOMAINS.H.min) / 2) + 0.5 + DOMAINS.H.min);
   const line1 = {
     x1: xSmall,
     x2: xSmall,

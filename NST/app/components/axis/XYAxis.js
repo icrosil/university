@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Axis from '../axis';
+import Axis from './';
 
 const XYAxis = (props) => {
   const xSettings = {

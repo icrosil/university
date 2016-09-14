@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ScatterPlot from '../scatterPlot';
+import ScatterPlot from './scatterPlot';
 
 const styles = {
   width: 500,
