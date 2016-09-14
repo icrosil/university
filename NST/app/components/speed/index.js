@@ -1,8 +1,8 @@
 import React from 'react';
 import Victor from 'victor';
 
-const renderSpeed = ({ xScale, yScale, net }, i, j, point) => {
-  const divider = new Victor(5, 5);
+const renderSpeed = ({ xScale, yScale, net, DIVIDER }, i, j, point) => {
+  const divider = new Victor(DIVIDER, DIVIDER);
   const xy1 = Victor.fromArray(net[i][j]);
   const xy2 = Victor.fromArray(net[i][j]).add(Victor.fromArray(point).divide(divider));
   return (
@@ -22,6 +22,7 @@ renderSpeed.propTypes = {
   xScale: React.PropTypes.func.isRequired,
   yScale: React.PropTypes.func.isRequired,
   net: React.PropTypes.array.isRequired,
+  DIVIDER: React.PropTypes.number.isRequired,
 };
 
 const Speed = (props) => (

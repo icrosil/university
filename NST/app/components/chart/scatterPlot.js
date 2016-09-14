@@ -5,6 +5,7 @@ import * as d3 from 'd3';
 import Shape from '../shape';
 import XYAxis from '../axis/XYAxis';
 import Pressure from '../pressure';
+import Discr from '../pressure/discr';
 import Speed from '../speed';
 
 // Returns a function that "scales" X coordinates from the data to fit the chart
@@ -24,25 +25,30 @@ const yScale = ({ DOMAINS, padding, height }) => (
 const scatterPlot = (props) => {
   const scales = { xScale: xScale(props), yScale: yScale(props) };
   return (
-    <svg width={props.width} height={props.height}>
-      <defs>
-        <marker
-          id="arrow"
-          markerWidth="10"
-          markerHeight="10"
-          refX="0" refY="3"
-          orient="auto"
-          markerUnits="strokeWidth"
-          viewBox="0 0 20 20"
-        >
-          <path d="M0,0 L0,6 L9,3 z" fill="black" />
-        </marker>
-      </defs>
-      <Shape {...props} {...scales} />
-      <XYAxis {...props} {...scales} />
-      <Pressure {...props} {...scales} />
-      <Speed {...props} {...scales} />
-    </svg>
+    <div style={{ margin: '0 auto' }}>
+      <svg width={props.width} height={props.height} className="mainSvg">
+        <defs>
+          <marker
+            id="arrow"
+            markerWidth="10"
+            markerHeight="10"
+            refX="0" refY="3"
+            orient="auto"
+            markerUnits="strokeWidth"
+            viewBox="0 0 20 20"
+          >
+            <path d="M0,0 L0,6 L9,3 z" fill="black" />
+          </marker>
+        </defs>
+        <Shape {...props} {...scales} />
+        <XYAxis {...props} {...scales} />
+        <Pressure {...props} {...scales} />
+        <Speed {...props} {...scales} />
+      </svg>
+      <svg width={50} height={props.height}>
+        <Discr {...props} {...scales} />
+      </svg>
+    </div>
   );
 };
 

@@ -3,15 +3,15 @@ import _ from 'lodash';
 import colormap from 'colormap';
 
 
-const NUM = 16;
+export const NUM = 16;
 const options = {
   colormap: 'portland',   // pick a builtin colormap or add your own
   nshades: NUM,       // how many divisions
   format: 'rgbaString',     // "hex" or "rgb" or "rgbaString"
   alpha: 0.6,           // set an alpha value or a linear alpha mapping [start, end]
 };
-const cg = colormap(options);
-const maxMinRange = (max, min) => (
+export const cg = colormap(options);
+export const maxMinRange = (max, min) => (
   _.times(NUM, (i) => ((i * (max - min)) / NUM) + min)
 );
 

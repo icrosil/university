@@ -4,9 +4,11 @@ import Divider from 'material-ui/Divider';
 import TextField from 'material-ui/TextField';
 import { GridList, GridTile } from 'material-ui/GridList';
 import _ from 'lodash';
+import * as d3 from 'd3';
 
 import Chart from '../chart';
 import { dataCritical, dataCenters, calculateAll } from '../../providers/static';
+import styles from './styles';
 
 function toRadians(angle) {
   return angle * (Math.PI / 180);
@@ -46,6 +48,7 @@ class LabFirst extends React.Component {
       (i * ((DOMAINS.W.max - DOMAINS.W.min) / NET_SIZE)) + DOMAINS.W.min,
       (j * ((DOMAINS.H.max - DOMAINS.H.min) / NET_SIZE)) + DOMAINS.H.min,
     ]));
+    const DIVIDER = 5;
     this.state = {
       VINF: [1, 0],
       DOMAINS,
@@ -58,14 +61,25 @@ class LabFirst extends React.Component {
       NET_SIZE,
       ALPHA,
       VINFABS,
+      DIVIDER,
     };
     this.state.stateCopy = { ...this.state };
   }
   process() {
-    this.setState(calculateAll(this.state), this.labRender);
+    this.recalculateFields(() => this.setState(calculateAll(this.state), this.labRender));
   }
   recalculateFields(callback) {
-    const { DOMAINS, NET_SIZE, G0, ALPHA, VINFABS } = this.state;
+    const { NET_SIZE, G0, ALPHA, VINFABS } = this.state;
+    const DOMAINS = {
+      H: {
+        min: +this.state.DOMAINS.H.min,
+        max: +this.state.DOMAINS.H.max,
+      },
+      W: {
+        min: +this.state.DOMAINS.W.min,
+        max: +this.state.DOMAINS.W.max,
+      },
+    };
     const M = this.state.M < 4 ? 4 : this.state.M;
     const maxLength = 2 + Math.sqrt(2);
     const defaultPoints = [0, 1, maxLength - 1, maxLength];
@@ -85,12 +99,17 @@ class LabFirst extends React.Component {
       (j * ((DOMAINS.H.max - DOMAINS.H.min) / NET_SIZE)) + DOMAINS.H.min,
     ]));
     this.setState({
+      DOMAINS,
       delta,
       dataCritical: dC,
       dataCenters: dataCenters(M, dC),
       net,
       G0: +G0,
       M,
+      V: [],
+      CP: [],
+      F: [],
+      PSI: [],
       VINF: [
         Math.abs(VINFABS) * Math.cos(toRadians(ALPHA)),
         Math.abs(VINFABS) * Math.sin(toRadians(ALPHA)),
@@ -104,10 +123,74 @@ class LabFirst extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div style={styles.container}>
         <Chart {...this.state.stateCopy} />
         <Divider />
         <GridList cellHeight={80}>
+          <GridTile cols={0.5}>
+            <TextField
+              value={this.state.DOMAINS.H.min}
+              floatingLabelText="Domain height min"
+              onChange={(e, value) => this.setState({
+                DOMAINS: {
+                  ...this.state.DOMAINS,
+                  H: {
+                    ...this.state.DOMAINS.H,
+                    min: value,
+                  },
+                },
+              })}
+              type="number"
+            />
+          </GridTile>
+          <GridTile cols={0.5}>
+            <TextField
+              value={this.state.DOMAINS.H.max}
+              floatingLabelText="Domain height max"
+              onChange={(e, value) => this.setState({
+                DOMAINS: {
+                  ...this.state.DOMAINS,
+                  H: {
+                    ...this.state.DOMAINS.H,
+                    max: value,
+                  },
+                },
+              })}
+              type="number"
+            />
+          </GridTile>
+          <GridTile cols={0.5}>
+            <TextField
+              value={this.state.DOMAINS.W.min}
+              floatingLabelText="Domain width min"
+              onChange={(e, value) => this.setState({
+                DOMAINS: {
+                  ...this.state.DOMAINS,
+                  W: {
+                    ...this.state.DOMAINS.W,
+                    min: value,
+                  },
+                },
+              })}
+              type="number"
+            />
+          </GridTile>
+          <GridTile cols={0.5}>
+            <TextField
+              value={this.state.DOMAINS.W.max}
+              floatingLabelText="Domain width max"
+              onChange={(e, value) => this.setState({
+                DOMAINS: {
+                  ...this.state.DOMAINS,
+                  W: {
+                    ...this.state.DOMAINS.W,
+                    max: value,
+                  },
+                },
+              })}
+              type="number"
+            />
+          </GridTile>
           <TextField
             value={this.state.M}
             floatingLabelText="Critical points quantity (gte than 4)"
@@ -126,12 +209,18 @@ class LabFirst extends React.Component {
             onChange={(e, value) => this.setState({ ALPHA: value })}
             type="number"
           />
-          <GridTile>
-            <RaisedButton
-              label="Render"
-              onClick={() => this.recalculateFields(() => this.labRender())}
-            />
-          </GridTile>
+          <TextField
+            value={this.state.NET_SIZE}
+            floatingLabelText="Net size"
+            onChange={(e, value) => this.setState({ NET_SIZE: +value })}
+            type="number"
+          />
+          <TextField
+            value={this.state.DIVIDER}
+            floatingLabelText="Divider (try me)"
+            onChange={(e, value) => this.setState({ DIVIDER: +value })}
+            type="number"
+          />
           <GridTile>
             <RaisedButton label="Calculate" onClick={() => this.process()} />
           </GridTile>
