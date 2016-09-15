@@ -31,16 +31,22 @@ renderDiscr.propTypes = {
   height: React.PropTypes.number.isRequired,
 };
 
-const Discr = (props) => {
-  const max = _.max(_.flattenDeep(props.CP));
-  const min = _.min(_.flattenDeep(props.CP));
-  const range = maxMinRange(max, min);
-  return (
-    <g>
-      {_.times(props.CP.length ? NUM : 0).map((val, i) => renderDiscr(props, i, range))}
-    </g>
-  );
-};
+class Discr extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    if (_.isEqual(nextProps.CP, this.props.CP)) return false;
+    return true;
+  }
+  render() {
+    const max = _.max(_.flattenDeep(this.props.CP));
+    const min = _.min(_.flattenDeep(this.props.CP));
+    const range = maxMinRange(max, min);
+    return (
+      <g>
+        {_.times(this.props.CP.length ? NUM : 0).map((val, i) => renderDiscr(this.props, i, range))}
+      </g>
+    );
+  }
+}
 
 Discr.propTypes = {
   CP: React.PropTypes.array.isRequired,

@@ -2,6 +2,13 @@ import React from 'react';
 import _ from 'lodash';
 import colormap from 'colormap';
 
+function median(values, multiplyer) {
+  const half = Math.floor((values.length * multiplyer) / 6);
+  if ((values.length * multiplyer) % 6) {
+    return values[half];
+  }
+  return (values[half - 1] + values[half]) / 2.0;
+}
 
 export const NUM = 16;
 const options = {
@@ -47,17 +54,28 @@ renderPressure.propTypes = {
   NET_SIZE: React.PropTypes.number.isRequired,
 };
 
-const Pressure = (props) => {
-  const max = _.max(_.flattenDeep(props.CP));
-  const min = _.min(_.flattenDeep(props.CP));
-  const range = maxMinRange(max, min);
-  return (
-    <g>
-      {props.CP.map((row, i) => row.map((point, j) =>
-        renderPressure(props, i, j, point, max, min, range)))}
-    </g>
-  );
-};
+class Pressure extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    if (_.isEqual(nextProps.CP, this.props.CP)) return false;
+    return true;
+  }
+  render() {
+    const CP = _.sortBy(_.flattenDeep(this.props.CP));
+    const Q1 = median(CP, 2);
+    const Q3 = median(CP, 4);
+    const interQ = Q3 - Q1;
+    const outerQ1 = Q1 - (interQ * 3);
+    // const outerQ3 = Q3 + (interQ * 3);
+    const outerQ3 = _.last(CP);
+    const range = maxMinRange(outerQ3, outerQ1);
+    return (
+      <g>
+        {this.props.CP.map((row, i) => row.map((point, j) =>
+          renderPressure(this.props, i, j, point, outerQ3, outerQ1, range)))}
+      </g>
+    );
+  }
+}
 
 Pressure.propTypes = {
   DOMAINS: React.PropTypes.object.isRequired,

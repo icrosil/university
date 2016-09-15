@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 
 const renderCriticalPoints = ({ xScale, yScale }) => (coords, index) => {
   const circleProps = {
@@ -78,13 +79,27 @@ renderShape.propTypes = {
   DOMAINS: React.PropTypes.object.isRequired,
 };
 
-const IShape = (props) => (
-  <g>
-    {renderShape(props)}
-    {props.dataCritical.map(renderCriticalPoints(props))}
-    {props.dataCenters.map(renderCenters(props))}
-  </g>
-);
+class IShape extends React.Component {
+  constructor(props) {
+    super(props);
+    this.fields = ['M', 'DOMAINS'];
+  }
+  shouldComponentUpdate(nextProps) {
+    if (_.every(
+      this.fields, (field) => _.isEqual(nextProps[field], this.props[field]))
+    ) return false;
+    return true;
+  }
+  render() {
+    return (
+      <g>
+        {renderShape(this.props)}
+        {this.props.dataCritical.map(renderCriticalPoints(this.props))}
+        {this.props.dataCenters.map(renderCenters(this.props))}
+      </g>
+    );
+  }
+}
 
 IShape.propTypes = {
   M: React.PropTypes.number.isRequired,

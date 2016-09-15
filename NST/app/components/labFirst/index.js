@@ -4,7 +4,6 @@ import Divider from 'material-ui/Divider';
 import TextField from 'material-ui/TextField';
 import { GridList, GridTile } from 'material-ui/GridList';
 import _ from 'lodash';
-import * as d3 from 'd3';
 
 import Chart from '../chart';
 import { dataCritical, dataCenters, calculateAll } from '../../providers/static';
@@ -27,7 +26,7 @@ class LabFirst extends React.Component {
         max: 6,
       },
     };
-    const M = 30;
+    const M = 100;
     const maxLength = 2 + Math.sqrt(2);
     const defaultPoints = [0, 1, maxLength - 1, maxLength];
     const smalls = [
@@ -41,15 +40,21 @@ class LabFirst extends React.Component {
         Math.pow(dC[index + 1][1] - dC[index][1], 2)
       )
     )))) / 2;
-    const NET_SIZE = 15;
+    const NET_SIZE = 175;
     const ALPHA = 0;
     const VINFABS = 1;
     const net = _.times(NET_SIZE + 1, (i) => _.times(NET_SIZE + 1, (j) => [
       (i * ((DOMAINS.W.max - DOMAINS.W.min) / NET_SIZE)) + DOMAINS.W.min,
       (j * ((DOMAINS.H.max - DOMAINS.H.min) / NET_SIZE)) + DOMAINS.H.min,
     ]));
-    const DIVIDER = 5;
+    const DIVIDER = 40;
+    const stylesSize = {
+      width: 500,
+      height: 300,
+      padding: 30,
+    };
     this.state = {
+      ...stylesSize,
       VINF: [1, 0],
       DOMAINS,
       M,

@@ -9,14 +9,14 @@ import Discr from '../pressure/discr';
 import Speed from '../speed';
 
 // Returns a function that "scales" X coordinates from the data to fit the chart
-const xScale = ({ DOMAINS, padding, width }) => (
+export const xScale = ({ DOMAINS, padding, width }) => (
   d3.scaleLinear()
     .domain([DOMAINS.W.min, DOMAINS.W.max])
     .range([padding, width - (padding * 2)])
 );
 
 // Returns a function that "scales" Y coordinates from the data to fit the chart
-const yScale = ({ DOMAINS, padding, height }) => (
+export const yScale = ({ DOMAINS, padding, height }) => (
   d3.scaleLinear()
     .domain([DOMAINS.H.min, DOMAINS.H.max])
     .range([height - padding, padding])
