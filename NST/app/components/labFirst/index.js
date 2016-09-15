@@ -2,6 +2,8 @@ import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
 import TextField from 'material-ui/TextField';
+import Toggle from 'material-ui/Toggle';
+import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import { GridList, GridTile } from 'material-ui/GridList';
 import _ from 'lodash';
 
@@ -67,6 +69,8 @@ class LabFirst extends React.Component {
       ALPHA,
       VINFABS,
       DIVIDER,
+      showV: true,
+      show: 'CP',
     };
     this.state.stateCopy = { ...this.state };
   }
@@ -226,7 +230,31 @@ class LabFirst extends React.Component {
             onChange={(e, value) => this.setState({ DIVIDER: +value })}
             type="number"
           />
-          <GridTile>
+          <Toggle
+            label="show V"
+            toggled={this.state.showV}
+            onToggle={(e, showV) => this.setState({ showV })}
+            labelPosition="right"
+          />
+          <RadioButtonGroup
+            name="show"
+            defaultSelected={this.state.show}
+            onChange={(e, show) => this.setState({ show })}
+          >
+            <RadioButton
+              value="CP"
+              label="show CP"
+            />
+            <RadioButton
+              value="F1"
+              label="show F1"
+            />
+            <RadioButton
+              value="PSI"
+              label="show PSI"
+            />
+          </RadioButtonGroup>
+          <GridTile style={styles.justify}>
             <RaisedButton label="Calculate" onClick={() => this.process()} />
           </GridTile>
         </GridList>

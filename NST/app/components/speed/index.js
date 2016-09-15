@@ -29,7 +29,7 @@ renderSpeed.propTypes = {
 class Speed extends React.Component {
   constructor(props) {
     super(props);
-    this.fields = ['DIVIDER', 'V'];
+    this.fields = ['DIVIDER', 'V', 'showV'];
   }
   shouldComponentUpdate(nextProps) {
     if (_.every(
@@ -40,7 +40,7 @@ class Speed extends React.Component {
   render() {
     return (
       <g>
-        {this.props.V.map((row, i) => (i % 6 ? null : row.map((point, j) =>
+        {this.props.showV && this.props.V.map((row, i) => (i % 6 ? null : row.map((point, j) =>
           (j % 6 ? null : renderSpeed(this.props, i, j, point)))))}
       </g>
     );
@@ -49,6 +49,7 @@ class Speed extends React.Component {
 
 Speed.propTypes = {
   V: React.PropTypes.array.isRequired,
+  showV: React.PropTypes.bool.isRequired,
 };
 Speed.defaultProps = {
   V: [],

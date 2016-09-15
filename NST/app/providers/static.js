@@ -105,7 +105,7 @@ export function calculateAll(props) {
   const CP = _.map(props.net, (val, i) => _.map(val, (point, j) => (
     1 - (Victor.fromArray(V[i][j]).length() / Victor.fromArray(props.VINF).length()))
   ));
-  const F = _.map(props.net, (val) => _.map(val, (point) => (
+  const F1 = _.map(props.net, (val) => _.map(val, (point) => (
     Victor.fromArray(props.VINF).dot(Victor.fromArray(point)) + (_.sum(
       _.times(props.M, (k) => G[k] * f(point, props.dataCritical[k]))
     ) || 0)
@@ -121,7 +121,7 @@ export function calculateAll(props) {
   return {
     V,
     CP,
-    F,
+    F1,
     PSI,
   };
 }

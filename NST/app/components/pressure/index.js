@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import colormap from 'colormap';
 
-function median(values, multiplyer) {
+export function median(values, multiplyer) {
   const half = Math.floor((values.length * multiplyer) / 6);
   if ((values.length * multiplyer) % 6) {
     return values[half];
@@ -55,12 +55,18 @@ renderPressure.propTypes = {
 };
 
 class Pressure extends React.Component {
+  constructor(props) {
+    super(props);
+    this.fields = ['CP', 'show', 'F1', 'PSI'];
+  }
   shouldComponentUpdate(nextProps) {
-    if (_.isEqual(nextProps.CP, this.props.CP)) return false;
+    if (_.every(
+      this.fields, (field) => _.isEqual(nextProps[field], this.props[field])
+    )) return false;
     return true;
   }
   render() {
-    const CP = _.sortBy(_.flattenDeep(this.props.CP));
+    const CP = _.sortBy(_.flattenDeep(this.props[this.props.show]));
     const Q1 = median(CP, 2);
     const Q3 = median(CP, 4);
     const interQ = Q3 - Q1;
@@ -70,7 +76,7 @@ class Pressure extends React.Component {
     const range = maxMinRange(outerQ3, outerQ1);
     return (
       <g>
-        {this.props.CP.map((row, i) => row.map((point, j) =>
+        {this.props.show && this.props[this.props.show].map((row, i) => row.map((point, j) =>
           renderPressure(this.props, i, j, point, outerQ3, outerQ1, range)))}
       </g>
     );
@@ -80,9 +86,14 @@ class Pressure extends React.Component {
 Pressure.propTypes = {
   DOMAINS: React.PropTypes.object.isRequired,
   CP: React.PropTypes.array.isRequired,
+  F1: React.PropTypes.array.isRequired,
+  PSI: React.PropTypes.array.isRequired,
+  show: React.PropTypes.string.isRequired,
 };
 Pressure.defaultProps = {
   CP: [],
+  F1: [],
+  PSI: [],
 };
 
 export default Pressure;
