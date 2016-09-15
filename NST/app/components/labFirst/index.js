@@ -250,6 +250,10 @@ class LabFirst extends React.Component {
               label="show F1"
             />
             <RadioButton
+              value="F2"
+              label="show F2"
+            />
+            <RadioButton
               value="PSI"
               label="show PSI"
             />

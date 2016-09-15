@@ -110,6 +110,20 @@ export function calculateAll(props) {
       _.times(props.M, (k) => G[k] * f(point, props.dataCritical[k]))
     ) || 0)
   )));
+  const F2 = _.map(props.net, (val) => _.map(val, (point) => (
+    Victor.fromArray(props.VINF).dot(Victor.fromArray(point)) + (_.sum(_.times(props.M - 1, (j) => (
+      (
+        (_.sum(_.times(j, (k) => G[k])) *
+        ((
+          ((props.dataCritical[j + 1][1] - props.dataCritical[j][1]) *
+            (point[0] - props.dataCritical[j][0])) -
+          ((props.dataCritical[j + 1][0] - props.dataCritical[j][0]) *
+            (point[1] - props.dataCritical[j][1]))
+        ) / (Math.pow(RJ(point, j, props.delta, props.dataCenters), 2)))) /
+        (2 * Math.PI)
+      )
+    )))) + (props.G0 * f(point, _.last(props.dataCritical)))
+  )));
   const PSI = _.map(props.net, (val) => _.map(val, (point) => (
     (props.VINF[0] * point[1]) - (props.VINF[1] * point[0]) - Math.log(_.reduce(
       _.times(props.M, (k) => Math.pow(
@@ -122,6 +136,7 @@ export function calculateAll(props) {
     V,
     CP,
     F1,
+    F2,
     PSI,
   };
 }

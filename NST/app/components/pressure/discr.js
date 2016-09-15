@@ -34,7 +34,7 @@ renderDiscr.propTypes = {
 class Discr extends React.Component {
   constructor(props) {
     super(props);
-    this.fields = ['CP', 'show', 'F1', 'PSI'];
+    this.fields = ['CP', 'show', 'F1', 'F2', 'PSI'];
   }
   shouldComponentUpdate(nextProps) {
     if (_.every(
@@ -63,12 +63,14 @@ class Discr extends React.Component {
 Discr.propTypes = {
   CP: React.PropTypes.array.isRequired,
   F1: React.PropTypes.array.isRequired,
+  F2: React.PropTypes.array.isRequired,
   PSI: React.PropTypes.array.isRequired,
   show: React.PropTypes.string.isRequired,
 };
 Discr.defaultProps = {
   CP: [],
   F1: [],
+  F2: [],
   PSI: [],
 };
 

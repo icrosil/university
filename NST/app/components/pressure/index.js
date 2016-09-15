@@ -57,7 +57,7 @@ renderPressure.propTypes = {
 class Pressure extends React.Component {
   constructor(props) {
     super(props);
-    this.fields = ['CP', 'show', 'F1', 'PSI'];
+    this.fields = ['CP', 'show', 'F1', 'F2', 'PSI'];
   }
   shouldComponentUpdate(nextProps) {
     if (_.every(
@@ -87,12 +87,14 @@ Pressure.propTypes = {
   DOMAINS: React.PropTypes.object.isRequired,
   CP: React.PropTypes.array.isRequired,
   F1: React.PropTypes.array.isRequired,
+  F2: React.PropTypes.array.isRequired,
   PSI: React.PropTypes.array.isRequired,
   show: React.PropTypes.string.isRequired,
 };
 Pressure.defaultProps = {
   CP: [],
   F1: [],
+  F2: [],
   PSI: [],
 };
 
