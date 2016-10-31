@@ -384,6 +384,21 @@ export function calculateAll(props) {
     ) || 0) +
     dfic(point, tails, tailsGamma)
   ))) : [];
+  const F12 = props.show === 'F12' ? _.map(props.net, (val) => _.map(val, (point) => (
+    Victor.fromArray(props.VINF).dot(Victor.fromArray(point)) + (_.sum(_.times(props.M - 1, (j) => (
+      (
+        (_.sum(_.times(j + 1, (k) => G[k])) *
+        ((
+          ((props.dataCritical[j + 1][1] - props.dataCritical[j][1]) *
+            (point[0] - props.dataCritical[j][0])) -
+          ((props.dataCritical[j + 1][0] - props.dataCritical[j][0]) *
+            (point[1] - props.dataCritical[j][1]))
+        ) / (Math.pow(RJ(point, j, props.delta, props.dataCenters), 2)))) /
+        (2 * Math.PI)
+      )
+    )))) + (props.G0 * f(point, props.dataCritical[props.M - 1])) +
+    dfic(point, tails, tailsGamma)
+  ))) : [];
   const F2 = props.show === 'F2' ? _.map(props.net, (val) => _.map(val, (point) => (
     Victor.fromArray(props.VINF).dot(Victor.fromArray(point)) + (_.sum(_.times(props.M - 1, (j) => (
       (
@@ -423,6 +438,7 @@ export function calculateAll(props) {
     CP,
     F1,
     F2,
+    F12,
     PSI,
     T: props.T + timeDelta,
     tails,

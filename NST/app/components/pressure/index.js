@@ -57,7 +57,7 @@ renderPressure.propTypes = {
 class Pressure extends React.Component {
   constructor(props) {
     super(props);
-    this.fields = ['CP', 'show', 'F1', 'F2', 'PSI'];
+    this.fields = ['CP', 'show', 'F1', 'F2', 'F12', 'PSI'];
   }
   shouldComponentUpdate(nextProps) {
     if (_.every(

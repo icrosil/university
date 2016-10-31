@@ -287,6 +287,10 @@ class LabSecond extends React.Component {
               label="show F2"
             />
             <RadioButton
+              value="F12"
+              label="show F12"
+            />
+            <RadioButton
               value="PSI"
               label="show PSI"
             />
