@@ -66,6 +66,7 @@ class Pressure extends React.Component {
     return true;
   }
   render() {
+    if (this.props.show === 'empty') return null;
     const CP = _.sortBy(_.flattenDeep(this.props[this.props.show]));
     const Q1 = median(CP, 2);
     const Q3 = median(CP, 4);

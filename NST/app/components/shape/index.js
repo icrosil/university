@@ -34,6 +34,39 @@ renderCenters.propTypes = {
   DOMAINS: React.PropTypes.object.isRequired,
 };
 
+const pColor = (p) => {
+  switch (p) {
+    case 0:
+      return 'green';
+    case 1:
+      return 'red';
+    case 2:
+      return 'blue';
+    case 3:
+      return 'black';
+    default:
+      return 'green';
+  }
+};
+
+const renderVixrs = ({ xScale, yScale }) => (tails, p) => _.map(tails, (coords, index) => {
+  const circleProps = {
+    x: xScale(coords[0]) - 2,
+    y: yScale(coords[1]) - 2,
+    width: 4,
+    height: 4,
+    key: `vixr-${p}-${index}`,
+    color: pColor(p),
+  };
+  return <rect {...circleProps} />;
+});
+
+renderVixrs.propTypes = {
+  xScale: React.PropTypes.func.isRequired,
+  yScale: React.PropTypes.func.isRequired,
+  DOMAINS: React.PropTypes.object.isRequired,
+};
+
 const styleLine = {
   strokeWidth: 1,
   stroke: 'black',
@@ -82,13 +115,7 @@ renderShape.propTypes = {
 class IShape extends React.Component {
   constructor(props) {
     super(props);
-    this.fields = ['M', 'DOMAINS'];
-  }
-  shouldComponentUpdate(nextProps) {
-    if (_.every(
-      this.fields, (field) => _.isEqual(nextProps[field], this.props[field]))
-    ) return false;
-    return true;
+    this.fields = ['M', 'DOMAINS', 'tails'];
   }
   render() {
     return (
@@ -96,6 +123,7 @@ class IShape extends React.Component {
         {renderShape(this.props)}
         {this.props.dataCritical.map(renderCriticalPoints(this.props))}
         {this.props.dataCenters.map(renderCenters(this.props))}
+        {this.props.showDots ? this.props.tails.map(renderVixrs(this.props)) : null}
       </g>
     );
   }
@@ -106,6 +134,13 @@ IShape.propTypes = {
   DOMAINS: React.PropTypes.object.isRequired,
   dataCritical: React.PropTypes.array.isRequired,
   dataCenters: React.PropTypes.array.isRequired,
+  tails: React.PropTypes.array.isRequired,
+  showDots: React.PropTypes.bool.isRequired,
+};
+
+IShape.defaultProps = {
+  tails: [],
+  showDots: false,
 };
 
 export default IShape;

@@ -6,6 +6,7 @@ import Paper from 'material-ui/Paper';
 import _ from 'lodash';
 
 import LabFirst from './labFirst';
+import LabSecond from './labSecond';
 import './styles/main.scss';
 
 const styles = {
@@ -18,7 +19,7 @@ export default class TabsExampleControlled extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 'static',
+      value: 'cynematic',
     };
   }
 
@@ -48,6 +49,16 @@ export default class TabsExampleControlled extends React.Component {
                   <Paper zDepth={2}>
                     <div style={styles}>
                       <LabFirst />
+                    </div>
+                  </Paper>
+              }
+            </Tab>
+            <Tab label="Cynematic" value="cynematic" >
+              {
+                this.state.value === 'cynematic' &&
+                  <Paper zDepth={2}>
+                    <div style={styles}>
+                      <LabSecond />
                     </div>
                   </Paper>
               }

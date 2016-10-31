@@ -40,8 +40,8 @@ class Speed extends React.Component {
   render() {
     return (
       <g>
-        {this.props.showV && this.props.V.map((row, i) => (i % 6 ? null : row.map((point, j) =>
-          (j % 6 ? null : renderSpeed(this.props, i, j, point)))))}
+        {this.props.showV && this.props.V.map((row, i) => (i % 4 ? null : row.map((point, j) =>
+          (j % 4 ? null : renderSpeed(this.props, i, j, point)))))}
       </g>
     );
   }
