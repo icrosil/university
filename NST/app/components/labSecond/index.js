@@ -76,7 +76,7 @@ class LabSecond extends React.Component {
       DIVIDER,
       showV: false,
       showDots: true,
-      show: 'F2',
+      show: 'CP',
       defaultPoints,
       maxLength,
       smalls,
