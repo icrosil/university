@@ -13,9 +13,10 @@ def convertMatrixToArray(matrix):
   rows, cols = np.shape(matrix)
   return np.reshape(matrix, (rows * cols))
 
-def convertArrayToMatrix(array, rows, cols):
+def convertArrayToMatrix(array):
   """Convert array that represents matrix to matrix.
 
   Used to convert system of differential equations back to matrix form.
   Returns matrix of shape (rows, cols)."""
-  return np.reshape(array, (rows, cols))
+  l = int(math.sqrt(len(array)))
+  return np.reshape(array, (l, l))

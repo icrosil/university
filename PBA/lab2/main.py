@@ -5,9 +5,15 @@ from scipy.integrate import odeint
 import numpy as np
 import math
 
-from r import R
-from p import P
-from x import X
+from functions.r import R
+from functions.p import P
+from functions.x import X
+from functions.k import K
+
+# function y, all matricies and vectors in some time
+def y(X, G, w):
+  gx = np.dot(G, X)
+  return np.add(gx, w)
 
 def main():
   """
@@ -65,11 +71,15 @@ def main():
   C = lambda t: [ 0, 0, ea(t) / La ]
   # times
   timeStart = 0
-  timeEnd = 3
-  timeCount = 25
   if timeStart < 0:
     raise NameError('T0 should be gt 0')
-  t = np.linspace(timeStart, timeEnd, timeCount)
+  timeEnd = 3
+  if timeEnd < timeStart:
+    raise NameError('TEnd should be gt T0')
+  timeCount = 25
+  if timeCount < 10:
+    raise NameError('Please set up count bit greater than 10')
+  times = np.linspace(timeStart, timeEnd, timeCount)
 
   # P0 - coeff
   P0 = np.array([
@@ -83,12 +93,9 @@ def main():
   k0 = 0
   # coeff for a
   a = [0, 0, 0]
-  # function y, all matricies and vectors in some time
-  def y(X, G, w):
-    gx = np.dot(G, X)
-    return np.add(gx, w)
 
-  solX = X(timeStart, timeEnd, A, C, G, N, M, y, w, P0_1, a, R)
-  print solX
+  rt = R(timeStart, timeEnd, P0_1, A, C, G, N, M, times)
+  xt = X(timeStart, timeEnd, A, C, G, N, M, y, w, P0_1, a, rt, times)
+  kt = K(timeStart, timeEnd, A, G, N, y, w, xt, times)
 
 main()
