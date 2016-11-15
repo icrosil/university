@@ -12,14 +12,12 @@ def Pfunc(P, t, A, C, G, N, M):
   gt = G(t)
   nt = N(t)
   mt = M(t)
-  Plen = len(P)
-  l = int(math.sqrt(Plen))
-  P1 = P.reshape([l, l])
+  pt = convertArrayToMatrix(P)
   gng = np.dot(np.dot(np.transpose(gt), nt), gt)
-  pa = np.dot(P1, at)
-  ap = np.dot(np.transpose(at), P1)
-  pcmcp = np.dot(np.dot(np.dot(np.dot(P1, ct), np.linalg.inv(mt)), np.transpose(ct)), P1)
-  return np.subtract(np.subtract(np.subtract(gng, pa), ap), pcmcp).reshape([1, Plen])[0, :]
+  pa = np.dot(pt, at)
+  ap = np.dot(np.transpose(at), pt)
+  pcmcp = np.dot(np.dot(np.dot(np.dot(pt, ct), np.linalg.inv(mt)), np.transpose(ct)), pt)
+  return convertMatrixToArray(np.subtract(np.subtract(np.subtract(gng, pa), ap), pcmcp))
 
 def P(tStart, t, A, C, G, N, M, P0):
   return odeint(

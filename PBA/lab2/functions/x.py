@@ -7,7 +7,7 @@ from helpers import convertArrayToMatrix, convertMatrixToArray
 from bisect import bisect
 
 # function for dx/dt = Xfunc(t)
-def Xfunc(X, t, A, C, G, N, M, y, w, P0_1, tStart, rt, times):
+def Xfunc(X, t, A, C, G, N, M, y, w, v, P0_1, tStart, rt, times):
   at = A(t)
   ct = C(t)
   gt = G(t)
@@ -21,12 +21,13 @@ def Xfunc(X, t, A, C, G, N, M, y, w, P0_1, tStart, rt, times):
   rgn = np.dot(np.dot(rt, np.transpose(gt)), nt)
   ygx = np.subtract(yt, np.dot(gt, X))
   rgnygx = np.dot(rgn, ygx)
-  return np.add(ax, rgnygx)
+  cv = np.dot(ct, v(t))
+  return np.add(np.add(ax, rgnygx), cv)
 
-def X(tStart, t, A, C, G, N, M, y, w, P0_1, a, rt, times):
+def X(tStart, t, A, C, G, N, M, y, w, v, P0_1, a, rt, times):
   return odeint(
     Xfunc,
     a,
     times,
-    args=(A, C, G, N, M, y, w, P0_1, tStart, rt, times)
+    args=(A, C, G, N, M, y, w, v, P0_1, tStart, rt, times)
   )

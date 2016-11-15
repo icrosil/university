@@ -1,7 +1,7 @@
 """
 authors: Illia Olenchenko, Maxim Manzuk.
 """
-from scipy.integrate import odeint
+from scipy.integrate import odeint, quad
 import numpy as np
 import math
 from plotHelper import drawSolution
@@ -50,6 +50,8 @@ def main():
   ]
   # w - vector with y, vector of r
   w = lambda t: [math.sin(t), math.cos(t)]
+  # v - vector with x, vector of m
+  v = lambda t: [math.sin(t) * t]
   # ea - external power
   ea = lambda t: t ** 2 / (t + 1)
   # A - main matrix of diff system, n * n
@@ -97,13 +99,32 @@ def main():
   k0 = 0
   # coeff for a, always 0 vector of n
   a = [0, 0, 0]
+  # coeff for x0, near to a vector of n
+  x0 = [0.1, 0.1, 0.1]
   # coeff for mu, should be binded with other functions
-  mu = 2
+  mu = 3.5
+  # checking mu
+  def muIntegral(t):
+    nt = N(t)
+    mt = M(t)
+    wt = w(t)
+    vt = v(t)
+    nw = np.dot(nt, wt)
+    nww = np.dot(nw, wt)
+    mv = np.dot(mt, vt)
+    mvv = np.dot(mv, vt)
+    return nww + mvv
+  nwwmvv = quad(muIntegral, timeStart, timeEnd)[0]
+  xa = np.subtract(x0, a)
+  pxaxa = np.dot(np.dot(P0, xa), xa)
+  nwwmvvpxaxa = nwwmvv + pxaxa
+  if (nwwmvvpxaxa > mu ** 2):
+    raise NameError('MU conditions are not correct, set up mu to this', math.sqrt(nwwmvvpxaxa))
 
   rt = R(timeStart, timeEnd, P0_1, A, C, G, N, M, times)
   # xt - array size timeCount of n vector
   # yt - array size timeCount of r vector
-  xt = X(timeStart, timeEnd, A, C, G, N, M, y, w, P0_1, a, rt, times)
+  xt = X(timeStart, timeEnd, A, C, G, N, M, y, w, v, P0_1, a, rt, times)
   kt = K(timeStart, timeEnd, G, N, y, w, xt, times)
   # decomprehension
   kt = [kti[0] for kti in  kt]
