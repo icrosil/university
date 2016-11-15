@@ -6,6 +6,7 @@ import numpy as np
 import math
 from plotHelper import drawSolution
 from helpers import convertArrayToMatrix, convertMatrixToArray
+from prettytable import PrettyTable
 
 from functions.r import R
 from functions.p import P
@@ -119,7 +120,7 @@ def main():
   pxaxa = np.dot(np.dot(P0, xa), xa)
   nwwmvvpxaxa = nwwmvv + pxaxa
   if (nwwmvvpxaxa > mu ** 2):
-    raise NameError('MU conditions are not correct, set up mu to this', math.sqrt(nwwmvvpxaxa))
+    raise NameError('MU conditions are not correct, set up mu to greater than', math.sqrt(nwwmvvpxaxa))
 
   rt = R(timeStart, timeEnd, P0_1, A, C, G, N, M, times)
   # xt - array size timeCount of n vector
@@ -133,7 +134,10 @@ def main():
   shapeEllipseMatrix = [convertArrayToMatrix(np.dot(rSmallTSquared[i], rt[i])) for i in range(timeCount)]
   et = [max(np.linalg.eig(shape)[0]) for shape in shapeEllipseMatrix]
   etNorm = [rSmallT[i] * math.sqrt(et[i]) for i in range(timeCount)]
-  print etNorm
-  drawSolution(times, xt, shapeEllipseMatrix, [0, 1])
+  t = PrettyTable(['time', 'etNorm'])
+  for i in range(timeCount):
+    t.add_row([times[i], etNorm[i]])
+  print t
+  drawSolution(times, xt, shapeEllipseMatrix, [0, 1], etNorm)
 
 main()
