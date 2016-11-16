@@ -29,9 +29,9 @@ def drawSolution(timeArray, centerArray, ellipseShapeMatrixArray, coordinates, e
     fig = plt.figure()
     #fig.patch.set_facecolor('black')
     axes = Axes3D(fig)
-    axes.set_xlabel('X')
-    axes.set_ylabel('Y')
-    axes.set_zlabel('Z')
+    axes.set_xlabel('T')
+    axes.set_ylabel('Y1')
+    axes.set_zlabel('Y2')
     axes.w_xaxis.set_pane_color((0, 0, 1, 0.2))
     axes.w_yaxis.set_pane_color((0, 0, 1, 0.2))
     axes.w_zaxis.set_pane_color((0, 0, 1, 0.2))
@@ -50,7 +50,7 @@ def draw2DEllipseIn3D(axes3d, center, shape, timePoint, i):
     numberOfPoints = 50
     xArray, yArray = getEllipsePoints(center, shape, numberOfPoints)
     timeArray = [timePoint for _ in range(numberOfPoints)]
-    axes3d.plot(timeArray, xArray, yArray, color=(1 - i, 0 + i, 1 - i), linewidth=3.0, linestyle='dotted')
+    axes3d.plot(timeArray, xArray, yArray, color=(1 - i, 0 + i, 1 - i), linewidth=1.0)
 
 def getEllipsePoints(center, ellipseShapeMatrix, numberOfPoints):
     """Return two one-dimensional arrays that represent points on ellipse.

@@ -45,16 +45,33 @@ def main():
   # La - induction
   La = 5.
   # G - matrix with y, r * n
-  G = lambda t: [
-    [1, 0, 1],
-    [0, 1, 1],
+  # set up start set M0
+  QV1 = [1, 0, 0]
+  QV2 = [0, 1, 0]
+  QV3 = [0, 0, 1]
+  Q0_SEMI_AXES = [1, 2, 3]
+  Q0_LAMBDA = [
+    [
+      (0 if j != i else 1 / Q0_SEMI_AXES[i] ** 2) for j in range(3)
+    ]
+    for i in range(3)
   ]
+
+  Q0_EIGEN_VECTORS_MATRIX = np.transpose([QV1, QV2, QV3])
+  Q0_EIGEN_VECTORS_MATRIX_INV = np.linalg.inv(Q0_EIGEN_VECTORS_MATRIX)
+
+  Q0 = np.dot(Q0_EIGEN_VECTORS_MATRIX, Q0_LAMBDA)
+  Q0 = np.dot(Q0, Q0_EIGEN_VECTORS_MATRIX_INV)
+  G = lambda t: [
+    Q0[0],
+    Q0[1],
+  ]
+  # ea - external power
+  ea = lambda t: 0
   # w - vector with y, vector of r
   w = lambda t: [math.sin(t), math.cos(t)]
   # v - vector with x, vector of m
-  v = lambda t: [math.sin(t) * t]
-  # ea - external power
-  ea = lambda t: t ** 2 / (t + 1)
+  v = lambda t: [ea(t)]
   # A - main matrix of diff system, n * n
   A = lambda t: [
     [0, 1, 0],
@@ -63,27 +80,27 @@ def main():
   ]
   # N - one of additional predefined matrices, r * r, diag or correlation matrix, +determined, sym
   N = lambda t: [
-    [2, 0],
-    [0, 0.2]
+    [2. / (t + 0.1), 0],
+    [0, 0.2 / ((t + 0.1) ** 2)]
   ]
   # M - one of additional predefined matrices, m * m, diag or correlation matrix, +determined, sym
   M = lambda t: [
-    [2],
+    [2 / (t + 1)],
   ]
   # C - second part for main diff, n * m
   C = lambda t: [
     [0],
     [0],
-    [ea(t) / La]
+    [1 / La]
   ]
   # times
   timeStart = 0
   if timeStart < 0:
     raise NameError('T0 should be gt 0')
-  timeEnd = 3
+  timeEnd = 10
   if timeEnd < timeStart:
     raise NameError('TEnd should be gt T0')
-  timeCount = 25
+  timeCount = 10
   if timeCount < 10:
     raise NameError('Please set up count bit greater than 10')
   times = np.linspace(timeStart, timeEnd, timeCount)
@@ -100,10 +117,10 @@ def main():
   k0 = 0
   # coeff for a, always 0 vector of n
   a = [0, 0, 0]
-  # coeff for x0, near to a vector of n
-  x0 = [0.1, 0.1, 0.1]
+  # coeff for x0, same as a vector of n
+  x0 = a
   # coeff for mu, should be binded with other functions
-  mu = 3.5
+  mu = 45
   # checking mu
   def muIntegral(t):
     nt = N(t)
