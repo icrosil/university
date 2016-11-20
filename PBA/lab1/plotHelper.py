@@ -7,8 +7,6 @@ import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.colors as colors
 
-from helper import findProjectOfEllipseToSubspace
-
 def drawSolution(timeArray, centerArray, ellipseShapeMatrixArray, coordinates):
     """Plot of result.
 
@@ -37,10 +35,7 @@ def drawSolution(timeArray, centerArray, ellipseShapeMatrixArray, coordinates):
     axes.w_zaxis.set_pane_color((0, 0, 1, 0.2))
     i=0
     for t in range(timeLen):
-        center, shape_matrix = findProjectOfEllipseToSubspace(centerArray[t], \
-                                                              ellipseShapeMatrixArray[t], initial_dimension, coordinates)
-
-        draw2DEllipseIn3D(axes, center, shape_matrix, timeArray[t], i)
+        draw2DEllipseIn3D(axes, centerArray[t], ellipseShapeMatrixArray[t], timeArray[t], i)
         i+=0.03
 
     plt.show()
@@ -60,13 +55,13 @@ def getEllipsePoints(center, ellipseShapeMatrix, numberOfPoints):
     theta = np.linspace(0, 2 * math.pi, numberOfPoints)
     e_vals, e_vecs = np.linalg.eig(ellipseShapeMatrix)
 
-    ax1 = 1/math.sqrt(e_vals[0])
-    ax2 = 1/math.sqrt(e_vals[1])
+    ax1 = 1 / math.sqrt(e_vals[0])
+    ax2 = 1 / math.sqrt(e_vals[1])
 
-    angle = math.acos(e_vecs[0][0])/math.sqrt(e_vecs[0][0]**2 + e_vecs[1][0]**2)
+    angle = math.acos(e_vecs[0][0]) / math.sqrt(e_vecs[0][0] ** 2 + e_vecs[1][0] ** 2)
 
     if angle < 0:
-        angle += 2*math.pi
+        angle += 2 * math.pi
 
     x_coordinates = []
     y_coordinates = []
@@ -77,8 +72,3 @@ def getEllipsePoints(center, ellipseShapeMatrix, numberOfPoints):
             ax1 * np.cos(t) * np.sin(angle) + ax2 * np.sin(t) * np.cos(angle) + center[1])
 
     return x_coordinates, y_coordinates
-
-
-
-
-

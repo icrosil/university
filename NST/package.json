@@ -185,6 +185,7 @@
     "colormap": "^2.2.0",
     "compression": "1.6.2",
     "d3": "^4.2.2",
+    "eslint-plugin-import": "^1.12.0",
     "express": "4.14.0",
     "fontfaceobserver": "2.0.1",
     "history": "3.0.0",
@@ -240,7 +241,7 @@
     "eslint": "3.3.0",
     "eslint-config-airbnb": "10.0.1",
     "eslint-import-resolver-webpack": "0.5.1",
-    "eslint-plugin-import": "1.12.0",
+    "eslint-plugin-import": "^1.12.0",
     "eslint-plugin-jsx-a11y": "2.1.0",
     "eslint-plugin-react": "6.0.0",
     "eventsource-polyfill": "0.9.6",
@@ -288,7 +289,7 @@
     "stylelint": "7.1.0",
     "stylelint-config-standard": "12.0.0",
     "url-loader": "0.5.7",
-    "webpack": "2.1.0-beta.15",
+    "webpack": "^2.1.0-beta.27",
     "webpack-dev-middleware": "1.6.1",
     "webpack-hot-middleware": "2.12.2"
   }

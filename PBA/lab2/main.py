@@ -1,6 +1,7 @@
 """
 authors: Illia Olenchenko, Maxim Manzuk.
 """
+from __future__ import division
 from scipy.integrate import odeint, quad
 import numpy as np
 import math
@@ -45,26 +46,9 @@ def main():
   # La - induction
   La = 5.
   # G - matrix with y, r * n
-  # set up start set M0
-  QV1 = [1, 0, 0]
-  QV2 = [0, 1, 0]
-  QV3 = [0, 0, 1]
-  Q0_SEMI_AXES = [1, 2, 3]
-  Q0_LAMBDA = [
-    [
-      (0 if j != i else 1 / Q0_SEMI_AXES[i] ** 2) for j in range(3)
-    ]
-    for i in range(3)
-  ]
-
-  Q0_EIGEN_VECTORS_MATRIX = np.transpose([QV1, QV2, QV3])
-  Q0_EIGEN_VECTORS_MATRIX_INV = np.linalg.inv(Q0_EIGEN_VECTORS_MATRIX)
-
-  Q0 = np.dot(Q0_EIGEN_VECTORS_MATRIX, Q0_LAMBDA)
-  Q0 = np.dot(Q0, Q0_EIGEN_VECTORS_MATRIX_INV)
   G = lambda t: [
-    Q0[0],
-    Q0[1],
+    [1, 0, 1],
+    [0, 1, 1],
   ]
   # ea - external power
   ea = lambda t: 0
@@ -100,16 +84,16 @@ def main():
   timeEnd = 10
   if timeEnd < timeStart:
     raise NameError('TEnd should be gt T0')
-  timeCount = 10
+  timeCount = 40
   if timeCount < 10:
     raise NameError('Please set up count bit greater than 10')
   times = np.linspace(timeStart, timeEnd, timeCount)
 
   # P0 - coeff, n * n, diag or correlation matrix, +determined, sym
   P0 = np.array([
-    [2, 0, 0],
-    [0, 2, 0],
-    [0, 0, 0.2]
+    [4, 0.05, 0.01],
+    [0.05, 9, 0.1],
+    [0.01, 0.1, 1]
   ])
   # coeff for P0 ** -1, n * n, -//-
   P0_1 = np.linalg.inv(P0)
