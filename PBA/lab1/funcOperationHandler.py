@@ -15,6 +15,7 @@ class FuncOperationHandler:
         return self.function(*args)
 
 
+
 def _op_to_function_op(oper):
     """Convert operator to operator on functions."""
     def function_op(self, operand):

@@ -7,6 +7,8 @@ import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.colors as colors
 
+from helpers import simpleProjectOfEllipseToSubspace
+
 def drawSolution(timeArray, centerArray, ellipseShapeMatrixArray, coordinates, etNorm):
     """Plot of result.
 
@@ -35,7 +37,9 @@ def drawSolution(timeArray, centerArray, ellipseShapeMatrixArray, coordinates, e
     axes.w_zaxis.set_pane_color((0, 0, 1, 0.2))
     i=0
     for t in range(timeLen):
-        draw2DEllipseIn3D(axes, centerArray[t], ellipseShapeMatrixArray[t], timeArray[t], i)
+        center, shape_matrix = simpleProjectOfEllipseToSubspace(centerArray[t], \
+                                                              ellipseShapeMatrixArray[t], initial_dimension, coordinates)
+        draw2DEllipseIn3D(axes, center, shape_matrix, timeArray[t], i)
         i += 1. / timeLen
     axes.plot(timeArray, centerArray[:, 0], centerArray[:, 1], color='green')
     plt.show()
@@ -45,7 +49,7 @@ def draw2DEllipseIn3D(axes3d, center, shape, timePoint, i):
     numberOfPoints = 25
     xArray, yArray = getEllipsePoints(center, shape, numberOfPoints)
     timeArray = [timePoint for _ in range(numberOfPoints)]
-    axes3d.plot(timeArray, xArray, yArray, color=(1 - i, 0 + i, 1 - i), linewidth=1.0)
+    axes3d.plot(timeArray, xArray, yArray, color=(1 - i, 0 + i, 1 - i), linewidth=3.0, linestyle='dotted')
 
 def getEllipsePoints(center, ellipseShapeMatrix, numberOfPoints):
     """Return two one-dimensional arrays that represent points on ellipse.

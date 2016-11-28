@@ -13,6 +13,7 @@ from functions.r import R
 from functions.p import P
 from functions.x import X
 from functions.k import K
+from defineEllipseHelp import initEllipse
 
 # function y, all matricies and vectors in some time
 def y(X, G, w):
@@ -90,11 +91,7 @@ def main():
   times = np.linspace(timeStart, timeEnd, timeCount)
 
   # P0 - coeff, n * n, diag or correlation matrix, +determined, sym
-  P0 = np.array([
-    [4, 0.05, 0.01],
-    [0.05, 9, 0.1],
-    [0.01, 0.1, 1]
-  ])
+  P0 = initEllipse()
   # coeff for P0 ** -1, n * n, -//-
   P0_1 = np.linalg.inv(P0)
   # coeff for k0, always 0

@@ -1,5 +1,4 @@
 """This module provides functionality for finding approximation of reachable set.
-
 Considered model is x'(t) = A(t)*x(t) + C(t)u(t).
 t belongs to [t0, t1]
 x(t0) belongs to start set M0, which is ellipsoid
@@ -16,9 +15,7 @@ from funcOperationHandler import FuncOperationHandler
 
 def findSolution(matrixA, startCenter, startEllipseShapeMatrix,  rightPart, uEllipseShapeMatrix, timeStart, timeEnd, timeCount):
     """Solve approximation problem.
-
     Assume n - dimension of the problem.
-
     Returns
     t_array - array of timestamps of length t_count
     center - array of shape (t_count, n)
@@ -31,9 +28,7 @@ def findSolution(matrixA, startCenter, startEllipseShapeMatrix,  rightPart, uEll
 
 def findCenterOfEllipse(matrix, initial_condition, t_array):
     """Returns center of approximation ellipsoid for reachable set.
-
     Considered equation: dx/dt = A*x + C*u
-
     matrix - matrix A(t) which defines system of diff equations of model
     initial_condition - initial condition for system, i. e. - center of ellipsoid,
         which describes initial set.
@@ -50,9 +45,7 @@ def findCenterOfEllipse(matrix, initial_condition, t_array):
 def getEllipseMatrix(system, rightPart, matrixU, \
                      startSetEllipse, timeArray):
     """Returns shape matrix of approximation ellipsoid for reachable set.
-
     Considered equation: dx/dt = A*x + C*u
-
     system - matrix A(t) which defines system of diff equations of model
     right_part - matrix C
     u_matrix - shape matrix for boundary ellipsoid for u
@@ -67,7 +60,6 @@ def getEllipseMatrix(system, rightPart, matrixU, \
     rows, cols = np.shape(system)
     def diff(func, time):
         """Describes system of equations.
-
         Returns array of values - value of of system in given time point."""
         matrixRepresentation = convertArrayToMatrix(func, rows, cols)
         a_r = np.dot(system, matrixRepresentation)
@@ -93,7 +85,6 @@ def getEllipseMatrix(system, rightPart, matrixU, \
 
 def findParameter_q(dimension, matrix, cgc):
     """Returns optimal parameter function for algorithm.
-
     Consider equation x(t) = A(t)x(t) + C(t)u(t)
     dimension - dimension of problem
     matrix - matrix function - shape of sought ellipsoid
@@ -113,7 +104,6 @@ def findParameter_q(dimension, matrix, cgc):
 
 def convertMatrixToArray(matrix):
     """Convert matrix to array representation.
-
     Used to convert matrix differential equation to system of differential equations.
     Returns array of size n*m where n - number of rows in matrix,
     m - number of columns in matrix."""
@@ -122,14 +112,12 @@ def convertMatrixToArray(matrix):
 
 def convertArrayToMatrix(array, rows, cols):
     """Convert array that represents matrix to matrix.
-
     Used to convert system of differential equations back to matrix form.
     Returns matrix of shape (rows, cols)."""
     return np.reshape(array, (rows, cols))
 
 def convertSolutionToMatrixForm(solution, rows, cols, timestamps_count):
     """Convert numerical solution of system of ODE to matrix form.
-
     Initially solution is represented in two dimensional form, where
     each row corresponds to certain timestamp and value is array of size
     rows*cols.
@@ -138,11 +126,3 @@ def convertSolutionToMatrixForm(solution, rows, cols, timestamps_count):
     that corresponds to certain timestamp.
     """
     return np.reshape(solution, (timestamps_count, rows, cols))
-
-
-
-
-
-
-
-

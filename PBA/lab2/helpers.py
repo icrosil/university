@@ -20,3 +20,13 @@ def convertArrayToMatrix(array):
   Returns matrix of shape (rows, cols)."""
   l = int(math.sqrt(len(array)))
   return np.reshape(array, (l, l))
+
+def simpleProjectOfEllipseToSubspace(center, ellipseShapeMatrix, initDimension, projectionCoordinates):
+  allCoord = [i for i in range(0,initDimension)]
+  diff = set(allCoord) - set(projectionCoordinates)
+  for e in diff:
+      ellipseShapeMatrix = np.delete(ellipseShapeMatrix, e, 0)
+      ellipseShapeMatrix = np.delete(ellipseShapeMatrix, e, 1)
+  newCenter = np.array([center[projectionCoordinates[0]], center[projectionCoordinates[1]]])
+
+  return newCenter, ellipseShapeMatrix
