@@ -52,9 +52,9 @@ def main():
     [0, 1, 1],
   ]
   # ea - external power
-  ea = lambda t: 0
+  ea = lambda t: 1 / (t + 2.)
   # w - vector with y, vector of r
-  w = lambda t: [math.sin(t), math.cos(t)]
+  w = lambda t: [0, 0]
   # v - vector with x, vector of m
   v = lambda t: [ea(t)]
   # A - main matrix of diff system, n * n
@@ -65,8 +65,8 @@ def main():
   ]
   # N - one of additional predefined matrices, r * r, diag or correlation matrix, +determined, sym
   N = lambda t: [
-    [2. / (t + 0.1), 0],
-    [0, 0.2 / ((t + 0.1) ** 2)]
+    [4, 0],
+    [0, 9]
   ]
   # M - one of additional predefined matrices, m * m, diag or correlation matrix, +determined, sym
   M = lambda t: [

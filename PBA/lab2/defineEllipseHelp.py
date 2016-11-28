@@ -20,6 +20,5 @@ def initEllipse():
     [a21 / 2, a22, a23 / 2],
     [a31 / 2, a32 / 2, a33]
   ]
-  quad_m = np.linalg.inv(quad_m)
 
   return quad_m
