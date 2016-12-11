@@ -29,6 +29,7 @@ def my_main():
     # G = [
     #     [FuncOperationHandler(lambda t: t**0.5 + t)]
     # ]
+    # this is the ellipse rule bound that could be defined in form as ellipse
     G = [[1,0], [0, 1/((0.5)**2)]]
     A = [
         [-1*(1/(R1*C1) + 1/(R2*C1)), 1/(R2*C1), 0],
@@ -42,6 +43,8 @@ def my_main():
         [0, 0]
     ]
 
+    # ellipse is the first initial ellipse defined in equation
+    # with some ellipseCenter
     ellipse, ellipseCenter = initEllipseByQuadraticEquatin()
 
 

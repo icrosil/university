@@ -49,5 +49,6 @@ def initEllipseByQuadraticEquatin():
               [a31/2, a32/2, a33]]
     quad_m = np.linalg.inv(quad_m)
     eig_vals, eig_vec = np.linalg.eig(quad_m)
+    # if here multiply vectors they should be 0 or near
 
     return quad_m, ellipseCenter

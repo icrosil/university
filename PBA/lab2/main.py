@@ -97,6 +97,7 @@ def main():
   # coeff for k0, always 0
   k0 = 0
   # coeff for a, always 0 vector of n
+  # first point
   a = [0, 0, 0]
   # coeff for x0, same as a vector of n
   x0 = a
