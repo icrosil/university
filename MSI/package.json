@@ -12,6 +12,7 @@
   "author": "Illia Olenchenko",
   "license": "ISC",
   "dependencies": {
+    "lodash": "^4.17.4",
     "synaptic": "^1.0.8"
   },
   "devDependencies": {
