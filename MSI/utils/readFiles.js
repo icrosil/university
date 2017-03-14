@@ -1,4 +1,5 @@
 const fs = require('fs');
+
 const { pattern } = require('../config');
 
 function readFiles(dirname, onFileContent, onFileNames, onError) {
@@ -7,8 +8,10 @@ function readFiles(dirname, onFileContent, onFileNames, onError) {
       onError(err);
       return;
     }
-    filenames.forEach((filename) => {
-      fs.readFile(dirname + filename, 'utf-8', (error, content) => {
+    const filtered = filenames.filter(item => !(pattern.hidden).test(item));
+    onFileNames(filtered);
+    filtered.forEach((filename) => {
+      fs.readFile(dirname + filename, (error, content) => {
         if (error) {
           onError(error);
           return;
@@ -16,7 +19,6 @@ function readFiles(dirname, onFileContent, onFileNames, onError) {
         onFileContent(filename, content);
       });
     });
-    onFileNames(filenames.filter(item => !(pattern.hidden).test(item)));
   });
 }
 
