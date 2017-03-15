@@ -1,3 +1,5 @@
+const Synaptic = require('synaptic');
+
 // file
 
 const pattern = {
@@ -15,6 +17,9 @@ const TEST_DIR = './test/';
 
 const INPUT_LAYER = 16 * 16;
 
+// const SQUASH = Synaptic.Neuron.squash.TANH;
+const SQUASH = Synaptic.Neuron.squash.LOGISTIC;
+
 module.exports = {
   pattern,
   fileGrouper,
@@ -22,4 +27,5 @@ module.exports = {
   INPUT_LAYER,
   PATTERN_DIR,
   TEST_DIR,
+  SQUASH,
 };

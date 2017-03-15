@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const Synaptic = require('synaptic');
 
-const { INPUT_LAYER } = require('../config');
+const { INPUT_LAYER, SQUASH } = require('../config');
 
 // nSamples / (alpha * (nInput + nOutput)), aplha 2-10
 // http://stats.stackexchange.com/questions/181/how-to-choose-the-number-of-hidden-layers-and-nodes-in-a-feedforward-neural-netw
@@ -23,6 +23,10 @@ const neuralLearn = ([storeTr, storeTe]) => {
     HIDDEN_LAYER,
     storeTr.classes.length
   );
+  // setting custom activate function on hidden layer
+  neuralNet.layers.hidden[0].set({
+    squash: SQUASH,
+  });
   // creating trainer
   const trainer = new Synaptic.Trainer(neuralNet);
   const trainingSet = _.values(storeTr.set);
