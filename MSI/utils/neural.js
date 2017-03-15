@@ -10,13 +10,14 @@ const { INPUT_LAYER } = require('../config');
 // );
 
 const howManyHiddenLayers2 = (nInput, nOutput) => Math.round((0.667 * nInput) + nOutput);
+const howManyHiddenLayers3 = () => 64;
 
 const neuralLearn = ([storeTr, storeTe]) => {
   // Creation of neuronet as Perceptron with 3 layers
   // First figure - how many input we will receive
   // Second figure - how many hidden neurons using this formula
   // Third figure - how many classes do we have for identification
-  const HIDDEN_LAYER = howManyHiddenLayers2(INPUT_LAYER, storeTr.classes.length);
+  const HIDDEN_LAYER = howManyHiddenLayers3(INPUT_LAYER, storeTr.classes.length);
   const neuralNet = new Synaptic.Architect.Perceptron(
     INPUT_LAYER,
     HIDDEN_LAYER,
@@ -28,24 +29,23 @@ const neuralLearn = ([storeTr, storeTe]) => {
   // training
   // TODO have this options in config
   trainer.train(trainingSet, {
-    rate: 0.3,
-    iterations: 40,
-    error: 0.01,
+    rate: 0.05,
+    log: 10,
     shuffle: true,
-    log: 4,
-    cost: Synaptic.Trainer.cost.CROSS_ENTROPY,
   });
-  // testing our network on stubbed file
-  const testIndex = 0;
-  const testResult = _.findIndex(
-    _.map(neuralNet.activate(storeTe.set[testIndex].input), Math.round)
-  );
-  // TODO continue here on why error so big check input output and neural network itself
-  console.log(storeTr.classes[testResult], '==', storeTe.classes[testIndex]);
+  // testing our network on same files
+  const activated = _.map(storeTe.set, ({ input }) => _.findIndex(
+    _.map(neuralNet.activate(input), Math.round)
+  ));
+  // logging our results
+  _.each(activated, (type, index) => {
+    console.log(storeTr.classes[type], '==', storeTe.filenames[index]);
+  });
   // kill process
   process.exit(1);
 };
 
 module.exports = {
   neuralLearn,
+  howManyHiddenLayers2,
 };

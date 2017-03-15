@@ -37,6 +37,8 @@ const getFilenames = (filenames) => {
 
 const getTrS = (store, filename, content) => {
   const blackWhite = bufferToBW(content);
+  // simple visualise of input
+  // console.log(_.chunk(blackWhite, 16), filename);
   return {
     input: blackWhite,
     output: _.map(store.classes, cls => +_.startsWith(filename, cls)),
