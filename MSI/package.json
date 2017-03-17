@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "fs-promise": "^2.0.0",
+    "jsonfile": "^2.4.0",
     "lodash": "^4.17.4",
     "synaptic": "^1.0.8"
   },

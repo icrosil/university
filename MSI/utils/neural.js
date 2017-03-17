@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const Synaptic = require('synaptic');
 
-const { INPUT_LAYER, SQUASH } = require('../config');
+const { INPUT_LAYER, SQUASH, TR_OPTIONS } = require('../config');
 
 // nSamples / (alpha * (nInput + nOutput)), aplha 2-10
 // http://stats.stackexchange.com/questions/181/how-to-choose-the-number-of-hidden-layers-and-nodes-in-a-feedforward-neural-netw
@@ -10,7 +10,7 @@ const { INPUT_LAYER, SQUASH } = require('../config');
 // );
 
 const howManyHiddenLayers2 = (nInput, nOutput) => Math.round((0.667 * nInput) + nOutput);
-const howManyHiddenLayers3 = () => 64;
+const howManyHiddenLayers3 = () => 64 / 2;
 
 const neuralLearn = ([storeTr, storeTe]) => {
   // Creation of neuronet as Perceptron with 3 layers
@@ -30,19 +30,19 @@ const neuralLearn = ([storeTr, storeTe]) => {
   // creating trainer
   const trainer = new Synaptic.Trainer(neuralNet);
   const trainingSet = _.values(storeTr.set);
-  // training
-  // TODO have this options in config
-  trainer.train(trainingSet, {
-    rate: 0.05,
-    log: 10,
-    shuffle: true,
-  });
+  // training with timings
+  console.time('train');
+  trainer.train(trainingSet, TR_OPTIONS);
+  console.timeEnd('train');
+
   // testing our network on same files
-  const activated = _.map(storeTe.set, ({ input }) => _.findIndex(
-    _.map(neuralNet.activate(input), Math.round)
+  const activated = _.map(storeTe.set, ({ input }) => neuralNet.activate(input));
+  // console.log(activated, 'activated');
+  const activatedMapped = _.map(activated, active => _.findIndex(
+    _.map(active, Math.round)
   ));
   // logging our results
-  _.each(activated, (type, index) => {
+  _.each(activatedMapped, (type, index) => {
     console.log(storeTr.classes[type], '==', storeTe.filenames[index]);
   });
   // kill process
