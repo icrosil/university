@@ -5,13 +5,28 @@ const { INPUT_LAYER, SQUASH, TR_OPTIONS } = require('../config');
 
 // nSamples / (alpha * (nInput + nOutput)), aplha 2-10
 // http://stats.stackexchange.com/questions/181/how-to-choose-the-number-of-hidden-layers-and-nodes-in-a-feedforward-neural-netw
-// const howManyHiddenLayers = (nSamples, nInput, nOutput, alpha = 2) => Math.round(
-//   nSamples / (alpha * (nInput + nOutput))
-// );
+const howManyHiddenLayers = (nSamples, nInput, nOutput, alpha = 2) => Math.round(
+  nSamples / (alpha * (nInput + nOutput))
+);
 
+/**
+ * auto calculated amount of neurons for hidden layer
+ * @method howManyHiddenLayers2
+ * @param  {number}             nInput  amount of inputs
+ * @param  {number}             nOutput amount of outputs
+ * @return {number}                     amount of neurons for hidden layer
+ */
 const howManyHiddenLayers2 = (nInput, nOutput) => Math.round((0.667 * nInput) + nOutput);
-const howManyHiddenLayers3 = () => 64 / 2;
+// static amount of neurons in hidden layer
+const howManyHiddenLayers3 = () => 64;
 
+/**
+ * main function for learning on images
+ * @method neuralLearn
+ * @param  {store}    storeTr training store with filenames classes and set of inputs and outs
+ * @param  {store}    storeTe -//-
+ * @return {undefined}
+ */
 const neuralLearn = ([storeTr, storeTe]) => {
   // Creation of neuronet as Perceptron with 3 layers
   // First figure - how many input we will receive
@@ -37,7 +52,6 @@ const neuralLearn = ([storeTr, storeTe]) => {
 
   // testing our network on same files
   const activated = _.map(storeTe.set, ({ input }) => neuralNet.activate(input));
-  // console.log(activated, 'activated');
   const activatedMapped = _.map(activated, active => _.findIndex(
     _.map(active, Math.round)
   ));
@@ -51,5 +65,6 @@ const neuralLearn = ([storeTr, storeTe]) => {
 
 module.exports = {
   neuralLearn,
+  howManyHiddenLayers,
   howManyHiddenLayers2,
 };
